@@ -5,10 +5,7 @@
 ### Mlmod: Machine Learning Methods for Data-Driven Modeling in LAMMPS
 Now available with Jupyter notebooks and Python scripts for readily setting up models and simulations.
 
-**Mlmod** is a Python/C++ package for utilizing machine learning methods and data-driven modeling for simulations in LAMMPS.
-The package includes methods for time-step integrators for dynamics and interactions using general ML model classes, 
-including Neural Networks, Kernel Regression, and others.  Models can be trained and exported from PyTorch or from 
-other machine learning frameworks.  
+**Mlmod** is a Python/C++ package for utilizing machine learning methods and data-driven modeling for simulations in LAMMPS.  The package provides methods for time-step integrators for dynamics and interactions using general ML model classes, including Neural Networks, Kernel Regression, and others.  Models can be trained and exported from PyTorch or from other machine learning frameworks.  Note, this website is for an early prototype alpha release.  Please provide feedback or information on bugs using the forms below. 
 
 LAMMPS is an optimized molecular dynamics package in C/C++ providing many interaction potentials and analysis tools for modeling and simulation.  Interaction methods include particle-mesh electrostatics, common coarse-grained potentials, many-body interactions, and others.
 
