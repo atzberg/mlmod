@@ -1,11 +1,11 @@
 <p align="center">
-<img src="https://github.com/atzberg/mango-selm/blob/master/images/docs/mango_selm_software.png" width="100%"> 
+<img src="https://github.com/atzberg/mlmod/blob/master/images/docs/mlmod_software.png" width="100%"> 
 </p>
 
 ### Mlmod: Machine Learning Methods for Data-Driven Modeling in LAMMPS
 Now available with Jupyter notebooks and Python scripts for readily setting up models and simulations.
 
-**MLmod** is a Python/C++ package for utilizing machine learning methods and data-driven modeling for simulations in LAMMPS.
+**Mlmod** is a Python/C++ package for utilizing machine learning methods and data-driven modeling for simulations in LAMMPS.
 The package includes methods for time-step integrators for dynamics and interactions using general ML model classes, 
 including Neural Networks, Kernel Regression, and others.  Models can be trained and exported from PyTorch or from 
 other machine learning frameworks.  
