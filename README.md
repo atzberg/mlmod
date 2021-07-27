@@ -1,4 +1,4 @@
-<p align="center">
+<p align="left">
 <img src="https://github.com/atzberg/mlmod/blob/main/images/docs/mlmod_software.png" width="80%"> 
 </p>
 
