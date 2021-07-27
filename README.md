@@ -1,6 +1,4 @@
-<p align="center">
-<img src="https://github.com/atzberg/mlmod/blob/master/images/docs/mlmod_software.png" width="100%"> 
-</p>
+<img src="https://github.com/atzberg/mlmod/blob/main/images/docs/mlmod_software.png" width="80%"> 
 
 ### Mlmod: Machine Learning Methods for Data-Driven Modeling in LAMMPS
 Now available with Jupyter notebooks and Python scripts for readily setting up models and simulations.
