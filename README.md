@@ -39,7 +39,7 @@ For more information on other ways to install or compile the package, please see
 
 **Python/Jupyter Notebooks for Modeling and Simulations** 
 
-MLMOD now easily can be set up using Python or Jupyter Notebooks.  See the documentation page and tutorial video for details, @@@  
+MLMOD now easily can be set up using Python or Jupyter Notebooks.  See the documentation page and examples for details.  
 
 ---
 Please cite the paper below when referencing this package:
