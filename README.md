@@ -62,15 +62,15 @@ URL = {https://arxiv.org/abs/2107.14362},
 
 __Mailing List for Future Updates and Releases__
 
-Please join the mailing list for future updates and releases [here](@@@).
+Please join the mailing list for future updates and releases [here](https://forms.gle/7seLKxrVrAN9U8Bg7).
 
 __Bugs or Issues__
 
-If you encounter any bugs or issues please let us know by providing information [here](@@@).
+If you encounter any bugs or issues please let us know by providing information [here](https://forms.gle/7seLKxrVrAN9U8Bg7).
 
 __Please submit usage and citation information__
 
-If you use this package or related methods, please let us know by submitting information [here](@@@).  
+If you use this package or related methods, please let us know by submitting information [here](https://forms.gle/7seLKxrVrAN9U8Bg7).  
 This helps us with reporting and with further development of the package.  Thanks.
 
 __Acknowledgements__
