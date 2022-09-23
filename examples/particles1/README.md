@@ -1,3 +1,8 @@
+
+<p align="left">
+<img src="doc_img/particle1.png" width="20%"> 
+</p>
+
 Simulation of particles that have mobility tensor coupling that is based on a PyTorch model for M(X).
 
 To run the simulation use 
