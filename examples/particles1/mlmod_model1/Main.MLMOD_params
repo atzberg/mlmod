@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<!--
+=======================================================
+  Data file for MLMOD package.
+
+  These files provide data and scripting control 
+  of the MLMOD package.
+                            
+  Author: Paul J. Atzberger
+
+=======================================================
+-->
+<MLMOD>
+
+<model_data type="dX_MF_ML1">
+  <M_ii_filename value="M_ii_oseen1.pt"/>
+  <M_ij_filename value="M_ij_oseen1.pt"/>
+</model_data>
+
+</MLMOD>
+
