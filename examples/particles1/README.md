@@ -7,5 +7,5 @@ Simulation of particles that have mobility tensor coupling that is based on a Py
 
 To run the simulation use 
 
-```python un_mlmod_sim1.py```
+```python run_mlmod_sim1.py```
 
