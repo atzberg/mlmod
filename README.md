@@ -1,5 +1,5 @@
 <p align="left">
-<img src="https://github.com/atzberg/mlmod_staging/blob/main/images/docs/mlmod_software.png" width="90%"> 
+<img src="https://github.com/atzberg/mlmod/blob/main/images/docs/mlmod_software.png" width="90%"> 
 </p>
                                                                                                 
 ### Mlmod: Machine Learning Methods for Data-Driven Modeling in LAMMPS
