@@ -66,7 +66,7 @@ Please join the mailing list for future updates and releases [here](https://form
 
 __Bugs or Issues__
 
-If you encounter any bugs or issues please let us know by providing information [here](https://forms.gle/7seLKxrVrAN9U8Bg7).
+If you encounter any bugs or issues please let us know by providing information [here](https://forms.gle/xBYLs7Gi1dwYvCR5A).
 
 __Please submit usage and citation information__
 
