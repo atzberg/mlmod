@@ -1,5 +1,5 @@
 <p align="left">
-<img src="https://github.com/atzberg/mlmod_staging/blob/main/images/docs/mlmod_software.png" width="90%"> 
+<img src="https://github.com/atzberg/mlmod/blob/main/images/docs/mlmod_software.png" width="90%"> 
 </p>
                                                                                                 
 ### Mlmod: Machine Learning Methods for Data-Driven Modeling in LAMMPS
@@ -66,11 +66,11 @@ Please join the mailing list for future updates and releases [here](https://form
 
 __Bugs or Issues__
 
-If you encounter any bugs or issues please let us know by providing information [here](https://forms.gle/7seLKxrVrAN9U8Bg7).
+If you encounter any bugs or issues please let us know by providing information [here](https://forms.gle/xBYLs7Gi1dwYvCR5A).
 
 __Please submit usage and citation information__
 
-If you use this package or related methods, please let us know by submitting information [here](https://forms.gle/7seLKxrVrAN9U8Bg7).  
+If you use this package or related methods, please let us know by submitting information [here](https://forms.gle/1jBXhasS9SGWgUY37).  
 This helps us with reporting and with further development of the package.  Thanks.
 
 __Acknowledgements__
