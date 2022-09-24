@@ -14,6 +14,7 @@ LAMMPS is an optimized molecular dynamics package in C/C++ providing many intera
 To install pre-compiled package for Python, download package
 
 Linux Debian 9+/Ubuntu: [mlmod_lammps-0.0.4.dev0-py3-none-manylinux_2_24_x86_64.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-0.0.4.dev0-py3-none-manylinux_2_24_x86_64.whl)
+
 Linux Debian 9+/Ubuntu (flexible install): [mlmod_lammps-0.0.4.dev0-py3-none-manylinux_2_24_x86_64.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-0.0.4.dev0-py3-none-any.whl)
 
 Install using
