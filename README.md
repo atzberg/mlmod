@@ -18,7 +18,7 @@ To install pre-compiled package for Python, download package
 
 Install using
 
-```pip install -U mlmod_lammps-0.0.4.dev0-py3-none-manylinux_2_24_x86_64.whl```
+```pip install -U (dist_full-name).whl```
 
 To test the package installed run 
 
