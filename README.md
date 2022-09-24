@@ -18,7 +18,7 @@ To install pre-compiled package for Python, download package
 
 Install using
 
-```pip install -U (substitute-the-whl-name-here).whl```
+```pip install -U (substitute-the-filename-here).whl```
 
 To test the package installed run 
 
