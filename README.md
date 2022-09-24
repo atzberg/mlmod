@@ -70,7 +70,7 @@ If you encounter any bugs or issues please let us know by providing information 
 
 __Please submit usage and citation information__
 
-If you use this package or related methods, please let us know by submitting information [here](https://forms.gle/7seLKxrVrAN9U8Bg7).  
+If you use this package or related methods, please let us know by submitting information [here](https://forms.gle/1jBXhasS9SGWgUY37).  
 This helps us with reporting and with further development of the package.  Thanks.
 
 __Acknowledgements__
