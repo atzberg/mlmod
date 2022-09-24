@@ -79,3 +79,9 @@ We gratefully acknowledge support for this project from NSF Grant DMS-1616353 an
 
 __Additional Information__ <br>
 http://atzberger.org/
+
+----
+
+[Examples](https://github.com/gd-vae/gd-vae/tree/master/examples) | [Documentation](http://web.math.ucsb.edu/~atzberg/gd_vae_docs/html/index.html) | [Atzberger Homepage](http://atzberger.org/)
+
+
