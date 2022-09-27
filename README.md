@@ -27,7 +27,7 @@ To test the package installed run
 Pre-compiled binaries for (Debian 9+/Ubuntu and Centos 7+, Python 3.6+).
 
 __If you installed previously__ this package, please be sure to update to the latest version using 
-```pip install -U (name-distr-here).whl```
+```pip install -U (substitute-the-filename-here).whl```
 
 __For example models, notebooks,__ and scripts, see the [examples folder](https://github.com/atzberg/mlmod/tree/master/examples).  
 
