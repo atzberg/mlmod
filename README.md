@@ -51,8 +51,7 @@ author = {Atzberger, P. J.},
 journal = {arXiv:2107.14362},
 year = {2022},
 URL = {https://arxiv.org/abs/2107.14362},
-}  
-```
+}```
 ----
 
 **Tutorials / Talks:**
