@@ -46,11 +46,12 @@ MLMOD now easily can be set up using Python or Jupyter Notebooks.  See the docum
 Please cite the paper below when referencing this package:
 ```
 @article{mlmod_atzberger,
-title = {MLMOD Package: Machine Learning Methods for Data-Driven Models in LAMMPS},
-author = {Atzberger, P. J.},
-journal = {arXiv:2107.14362},
-year = {2022},
-URL = {https://arxiv.org/abs/2107.14362},
+  title = {MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
+  author = {Atzberger, P. J.},
+  journal = {arxiv},
+  year = {2021},
+  doi = {https://arxiv.org/abs/2107.14362},
+  URL = {http://atzberger.org/},
 }
 ```
 ----
