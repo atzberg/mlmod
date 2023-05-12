@@ -13,5 +13,5 @@ https://lammps.org/).
 An example build is given in the script
 ./build.sh
 
-For more details, see the installation instructions in the mlmod ./src directory
-and http://atzberger.org.
+For more details, see the installation instructions in 
+the mlmod ./src directory and http://atzberger.org.
