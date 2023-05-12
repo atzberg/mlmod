@@ -5,12 +5,7 @@ if (test $1 = 1) then
   echo "================================================================================"
   echo "USER-MLMOD Package: Machine Learning (ML) for Data-Driven Modeling (MOD)        "
   echo "--------------------------------------------------------------------------------"
-  #echo " "
-
-  #echo "Symbolic link copying files for USER-MLMOD package."  
-  #basePath=$(pwd -P)
-  #echo "Base Path = $basePath"
-
+  
   echo "Copying files for the package into the source directory."
 
   find $PWD -name '*.h' -exec cp "{}" ../ >& mlmod_cp_h.log \;
