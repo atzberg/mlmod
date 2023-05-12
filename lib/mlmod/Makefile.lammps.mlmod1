@@ -1,0 +1,8 @@
+# Settings that the LAMMPS build will import when this package library is used
+PWD=$(shell pwd)
+user-mlmod_SYSINC =
+user-mlmod_SYSLIB = -l fftw3 -l torch -l torch_cpu -l c10
+#user-mlmod_SYSPATH = -L /usr/lib/x86_64-linux-gnu
+user-mlmod_SYSPATH = -L $(PWD)/libtorch/lib
+ 
+

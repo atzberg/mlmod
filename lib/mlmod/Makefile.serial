@@ -1,0 +1,148 @@
+# library build -*- makefile -*-
+SHELL = /bin/sh
+
+# which file will be copied to Makefile.lammps
+EXTRAMAKE = Makefile.lammps.mlmod1
+
+# ---------------------------------------------------------------------
+# ATZ:
+# get svn revision number to include in codes 
+# note the directory of the compilation codes is a copy and not an 
+# SVN dir.  We assume it is always one dir up from SVN source codes.
+
+COMPILEDATETIME := -D'COMPILE_DATE_TIME="$(shell date)"'
+SVNDEV          := -D'SVN_REV="$(shell svnversion -n ..)"'
+GITDEV          := -D'GIT_REV="$(shell git rev-parse HEAD)"'
+
+PWD=$(shell pwd)
+
+# ------ FILES ------
+
+SRC = $(wildcard *.cpp)
+INC = $(wildcard *.h)
+
+# ------ DEFINITIONS ------
+
+ARLIBNAME = libmlmod.a
+SHAREDLIBNAME = libmlmod.so
+
+OBJ = $(SRC:.cpp=.o)
+
+default: lib_static
+
+# ------ SETTINGS ------
+
+.PHONY: clean lib_shared lib_static depend
+
+# include any MPI settings needed for the ATC library to build with
+# must be the same MPI library that LAMMPS is built with
+
+CC = g++
+#CCFLAGS = -O3 -g -fPIC 
+# -z,defs check for unresolved functions at compile time
+#CCFLAGS = -O3 -g -fPIC -Wl,-z,defs 
+CCFLAGS = -O3 -fPIC -Wl,-z,defs -D_GLIBCXX_USE_CXX11_ABI=0 
+CPPFLAGS = -I ../../src -I../../src/USER-MLMOD -I../../src/STUBS $(SVNDEV) $(GITDEV) $(COMPILEDATETIME) 
+
+ARCHIVE = ar
+ARCHFLAG = -rc
+
+SHAREDLIB = g++
+SHAREDFLAGS = -shared
+
+# ----- TORCH ------
+# May need adjusting based on the system
+#
+#TORCH_INC = -DLIB_TORCH -I ./libtorch/include/ -I ./libtorch/include/torch/csrc/api/include
+#TORCH_PATH = -L ./libtorch/lib/
+
+# for Ubuntu 22.04
+#TORCH_INC = -DLIB_TORCH -I /usr/include/torch/csrc/api/include/
+#TORCH_PATH = -L /usr/lib/x86_64-linux-gnu/
+#TORCH_LIB = -ltorch
+
+# for Debian 9 (for pip release, using docker)
+#TORCH_INC = -DLIB_TORCH -I /usr/include -I /usr/include/torch/csrc/api/include
+#TORCH_PATH = -L /usr/lib/x86_64-linux-gnu
+
+TORCH_INC = -DLIB_TORCH -I $(PWD)/libtorch/include/torch/csrc/api/include -I $(PWD)/libtorch/include
+TORCH_PATH = -L $(PWD)/libtorch/lib
+TORCH_LIBS = torch_cpu torch c10
+
+#TMP_LIBS=c10 gloo gtest clog THD protobuf caffe2 torch mkldnn c10d
+#TMP_LIBS=c10 torch torch_cpu fbjn torch_jni 
+
+#WARNING: order is import for libraries (order dependent to resolving)
+#TMP_LIBS=torch_cpu torch c10
+
+#TORCH_LIB=$(patsubst %,-l%,$(TMP_LIBS)) 
+#TORCH_LIB = -ltorch -ltorch_cpu
+
+# for Debian 9 (for pip release, using docker)
+#TORCH_INC = -DLIB_TORCH -I /usr/include/
+#TORCH_PATH = -L /usr/lib/
+#TORCH_LIB = -ltorch
+
+# ----- FFT ------
+# FFT library
+# see discussion in Section 3.5.2 of manual
+# can be left blank to use provided KISS FFT library
+# INC = -DFFT setting, e.g. -DFFT_FFTW, FFT compiler settings
+# PATH = path for FFT library
+# LIB = name of FFT library
+
+#FFT_INC =       -DFFT_FFTW -I/opt/fftw3-gcc/include
+#FFT_PATH =      -L/opt/fftw3-gcc/lib
+
+FFT_INC = -DFFT_FFTW -I/usr/include
+FFT_PATH = -L/usr/lib/x86_64-linux-gnu
+FFT_LIB = -lfftw3
+
+MLMOD_INC = -I $(PWD)/../../src -I $(PWD)
+MLMOD_PATH = 
+MLMOD_LIB = 
+
+TINY_XML_INC = -I /usr/include
+TINY_XML_PATH = -L /usr/lib/x86_64-linux-gnu
+TINY_XML_LIB = -l tinyxml2
+
+LAPACKE_INC = -I /usr/include/
+LAPACKE_PATH = -L /usr/lib/x86_64-linux-gnu/
+LAPACKE_LIB = -l lapacke -l lapack -l blas
+
+# ----- EXTRAs ------
+EXTRA_INC = $(FFT_INC) $(TORCH_INC) $(MLMOD_INC) $(TINY_XML_INC) $(LAPACKE_INC) $(TMP_INC)
+EXTRA_PATH = $(FFT_PATH) $(TORCH_PATH) $(MLMOD_PATH) $(TINY_XML_PATH) $(LAPACKE_PATH) $(TMP_PATH)
+EXTRA_LIB = $(FFT_LIB) $(TORCH_LIB) $(MLMOD_LIB) $(TINY_XML_LIB) $(LAPACKE_LIB) $(TMP_LIB)
+
+# ------ MAKE PROCEDURE ------
+
+lib_shared: $(OBJ)
+	$(SHAREDLIB) $(SHAREDFLAGS) $(EXTRA_PATH) $(EXTRA_LIB) -o $(SHAREDLIBNAME) $(OBJ)
+	@cp $(EXTRAMAKE) Makefile.lammps
+
+lib_static: $(OBJ)
+	$(ARCHIVE) $(ARFLAGS) $(ARLIBNAME) $(OBJ)
+	@cp $(EXTRAMAKE) Makefile.lammps
+
+# ------ COMPILE RULES ------
+
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) $(CCFLAGS) $(EXTRA_PATH) $(EXTRA_INC) -c $<
+
+# ------ DEPENDENCIES ------
+
+depend .depend : fastdep.exe $(SRC)
+	@./fastdep.exe $(INCFLAGS) -- $^ > .depend || exit 1
+
+fastdep.exe: ../../src/DEPEND/fastdep.c
+	@cc -O -o $@ $<
+
+# ------ CLEAN ------
+
+clean:
+	-rm -f *.o *~ .depend $(SHAREDLIBNAME) $(ARLIBNAME) fastdep.exe
+
+sinclude .depend
+
+

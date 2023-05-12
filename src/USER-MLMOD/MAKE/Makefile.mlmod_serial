@@ -1,0 +1,152 @@
+# mlmod_serial = GNU g++ compiler, no MPI
+SHELL = /bin/sh
+
+# ---------------------------------------------------------------------
+# get svn revision number to include in codes 
+# note the directory of the compilation codes is a copy and not an 
+# SVN dir.  We assume it is always one dir up from SVN source codes.
+
+SVNDEV          := -D'SVN_REV="$(shell svnversion -n ..)"'
+GITDEV          := -D'GIT_REV="$(shell git rev-parse HEAD)"'
+COMPILEDATETIME := -D'COMPILE_DATE_TIME="$(shell date)"'
+
+PWD=$(shell pwd)
+#PWD=.
+PATH_MLMOD_PKG=$(PWD)/../../lib/mlmod
+
+# ---------------------------------------------------------------------
+# compiler/linker settings
+# specify flags and libraries needed for your compiler
+
+
+CC = g++
+CCFLAGS = $(SVNDEV) $(GITDEV) $(COMPILEDATETIME) -D_GLIBCXX_USE_CXX11_ABI=0  
+SHFLAGS = -fPIC
+DEPFLAGS = -M
+
+LINK = g++
+LINKFLAGS = -O -L/usr/lib/x86_64-linux-gnu
+LIB = 
+LIB = 
+SIZE = size
+
+ARCHIVE = ar
+ARFLAGS = -rc
+SHLIBFLAGS = -shared
+
+# ---------------------------------------------------------------------
+# LAMMPS-specific settings, all OPTIONAL
+# specify settings for LAMMPS features you will use
+# if you change any -D setting, do full re-compile after "make clean"
+
+# LAMMPS ifdef settings
+# see possible settings in Section 3.5 of the manual
+
+LMP_INC = -DLAMMPS_GZIP -DLAMMPS_MEMALIGN=64 $(SVNDEV) $(GITDEV) $(COMPILEDATETIME) -DLAMMPS_PNG -DLAMMPS_JPEG -DLAMMPS_FFMPEG -DLAMMPS_EXCEPTIONS
+
+# MPI library
+# see discussion in Section 3.4 of the manual
+# MPI wrapper compiler/linker can provide this info
+# can point to dummy MPI library in src/STUBS as in Makefile.serial
+# use -D MPICH and OMPI settings in INC to avoid C++ lib conflicts
+# INC = path for mpi.h, MPI compiler settings
+# PATH = path for MPI library
+# LIB = name of MPI library
+
+MPI_INC = -I../STUBS 
+MPI_PATH = -L$(PWD)/../STUBS
+MPI_LIB = -lmpi_stubs
+
+# FFT library
+# see discussion in Section 3.5.2 of manual
+# can be left blank to use provided KISS FFT library
+# INC = -DFFT setting, e.g. -DFFT_FFTW, FFT compiler settings
+# PATH = path for FFT library
+# LIB = name of FFT library
+
+FFT_INC = -DFFT_FFTW -I/usr/include
+FFT_PATH = -L/usr/lib/x86_64-linux-gnu
+FFT_LIB = -lfftw3	
+
+# JPEG and/or PNG library
+# see discussion in Section 3.5.4 of manual
+# only needed if -DLAMMPS_JPEG or -DLAMMPS_PNG listed with LMP_INC
+# INC = path(s) for jpeglib.h and/or png.h
+# PATH = path(s) for JPEG library and/or PNG library
+# LIB = name(s) of JPEG library and/or PNG library
+
+IMG_INC = -I /usr/include 
+IMG_PATH = -L/usr/lib/x86_64-linux-gnu 
+IMG_LIB = -l jpeg -l png 
+
+#VTK_INC = -I /usr/include/vtk-7.1	     
+#VTK_PATH = -L /usr/lib/x86_64-linux-gnu/ 
+#VTK_LIB = -l vtk	
+
+# Note current install puts is in Makefile.package
+MLMOD_INC = -I$(PATH_MLMOD_PKG) -I$(PWD) -I.
+MLMOD_PATH = -L$(PATH_MLMOD_PKG) -L/usr/lib/x86_64-linux-gnu 
+#MLMOD_LIB = -l tinyxml2 -l torch -l torch_cpu -l c10 -l lapacke -l lapack -l blas -l mlmod -l vtk
+# WARNING: Order of linking matters, starting from dependent to the resolving libraries
+MLMOD_LIB = -l mlmod -l lapacke -l lapack -l blas 
+
+TORCH_INC = -I ../../lib/mlmod -I ../../src
+TORCH_PATH = -L$(PATH_MLMOD_PKG)/libtorch/lib  
+TORCH_LIB = -l torch_cpu -l torch -l c10
+
+XML_INC = -I /usr/include 
+XML_PATH = -L/usr/lib/x86_64-linux-gnu 
+XML_LIB = -l tinyxml2 
+
+# ---------------------------------------------------------------------
+# build rules and dependencies
+# do not edit this section
+
+include Makefile.package.settings
+include Makefile.package
+
+EXTRA_INC = $(LMP_INC) $(PKG_INC) $(MLMOD_INC) $(XML_INC) $(TORCH_INC) $(MPI_INC) $(FFT_INC) $(IMG_INC) $(PKG_SYSINC) $(VTK_INC)
+EXTRA_PATH = $(PKG_PATH) $(MLMOD_PATH) $(XML_PATH) $(TORCH_PATH) $(MPI_PATH) $(FFT_PATH) $(IMG_PATH) $(PKG_SYSPATH) $(VTK_PATH)
+EXTRA_LIB = $(PKG_LIB) $(MLMOD_LIB) $(XML_LIB) $(TORCH_LIB) $(MPI_LIB) $(FFT_LIB) $(IMG_LIB) $(PKG_SYSLIB) $(VTK_LIB)
+EXTRA_CPP_DEPENDS = $(PKG_CPP_DEPENDS)
+EXTRA_LINK_DEPENDS = $(PKG_LINK_DEPENDS)
+
+# Path to src files
+vpath %.cpp ..
+vpath %.h ..
+
+# Link target
+
+$(EXE): main.o $(LMPLIB) $(EXTRA_LINK_DEPENDS)
+	$(LINK) $(LINKFLAGS) main.o $(EXTRA_PATH) $(LMPLINK) $(EXTRA_LIB) $(LIB) -o $@
+	$(SIZE) $@
+
+# Library targets
+
+$(ARLIB): $(OBJ) $(EXTRA_LINK_DEPENDS)
+	@rm -f ../$(ARLIB)
+	$(ARCHIVE) $(ARFLAGS) ../$(ARLIB) $(OBJ)
+	@rm -f $(ARLIB)
+	@ln -s ../$(ARLIB) $(ARLIB)
+
+$(SHLIB): $(OBJ) $(EXTRA_LINK_DEPENDS)
+	$(CC) $(CCFLAGS) $(SHFLAGS) $(SHLIBFLAGS) $(EXTRA_PATH) -o ../$(SHLIB) \
+		$(OBJ) $(EXTRA_LIB) $(LIB)
+	@rm -f $(SHLIB)
+	@ln -s ../$(SHLIB) $(SHLIB)
+
+# Compilation rules
+
+%.o:%.cpp
+	$(CC) $(CCFLAGS) $(SHFLAGS) $(EXTRA_INC) -c $<
+
+# Individual dependencies
+
+depend : fastdep.exe $(SRC)
+	@./fastdep.exe $(EXTRA_INC) -- $^ > .depend || exit 1
+
+fastdep.exe: ../DEPEND/fastdep.c
+	cc -O -o $@ $<
+
+sinclude .depend
+
