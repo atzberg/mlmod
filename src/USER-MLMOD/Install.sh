@@ -2,14 +2,6 @@
 
 if (test $1 = 1) then
 
-#  echo "  "
-#  echo "WARNING: (PJA) We use symbolic links instead of copy of source codes."
-#  echo "         This was done to help avoid issues when debugging and changing files. "
-#  echo "         If one is not careful the copies are changed and edits not retained."
-#  echo "         To avoid this annoying issue, symbolic links are used."
-#  echo "         For the final release a copy using cp -p command should be used instead."
-#
-
   echo "================================================================================"
   echo "USER-MLMOD Package: Machine Learning (ML) for Data-Driven Modeling (MOD)        "
   echo "--------------------------------------------------------------------------------"
@@ -18,12 +10,9 @@ if (test $1 = 1) then
   #echo "Symbolic link copying files for USER-MLMOD package."  
   #basePath=$(pwd -P)
   #echo "Base Path = $basePath"
-  #ln -sf $basePath/*.h ../
-  #ln -sf $basePath/*.cpp ../
 
   echo "Copying files for the package into the source directory."
-  #cp -p $PWD/*.h ../
-  #cp -p $PWD/*.cpp ../
+
   find $PWD -name '*.h' -exec cp "{}" ../ >& mlmod_cp_h.log \;
   find $PWD -name '*.cpp' -exec cp "{}" ../ >& mlmod_cp_cpp.log \;
 
