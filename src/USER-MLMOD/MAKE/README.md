@@ -1,4 +1,3 @@
-================================================================
 Mlmod: Machine Learning Modeling Package
 
 http://atzberger.org/
@@ -21,5 +20,4 @@ of the dependent libraries.
 For more information see 
 http://atzberger.org/
 
-================================================================
 
