@@ -1,0 +1,12 @@
+# Settings that the LAMMPS build will import when this package library is used
+#
+# Ubuntu 18.04 installation of VTK7 library:
+# ------------------------------------------
+#
+# Execute the following installation command:
+#
+# $ sudo apt-get install libvtk7-dev
+#
+vtk_SYSINC = -I /usr/include/vtk-7.1
+vtk_SYSLIB = -l vtkCommonCore-7.1 -l vtkIOCore-7.1 -l vtkIOXML-7.1 -l vtkIOLegacy-7.1 -l vtkCommonDataModel-7.1 -l vtkIOParallelXML-7.1
+vtk_SYSPATH = -L /usr/lib/x86_64-linux-gnu

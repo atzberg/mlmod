@@ -1,0 +1,20 @@
+# Settings that the LAMMPS build will import when this package library is used
+#
+PWD=$(shell pwd)  # the cwd is changed in 2023 Aug edition 
+
+LBASE=../../lib/mlmod
+
+ifeq ($(ABI_CX11_FLAG),-D_GLIBCXX_USE_CXX11_ABI=0) 
+  user-mlmod_SYSINC = -I ${LBASE}/libtorch_no_cxx11/include -I ${LBASE}/tinyxml2 -I ${LBASE} -I /usr/include
+  user-mlmod_SYSLIB = -l fftw3 -l torch -l torch_cpu -l c10 -l tinyxml2 -l lapacke
+  #user-mlmod_SYSPATH = -L /usr/lib/x86_64-linux-gnu
+  #user-mlmod_SYSPATH = -L $(PWD)/libtorch_no_cxx11/lib
+  user-mlmod_SYSPATH = -L ${LBASE}/libtorch_no_cxx11/lib -L ${LBASE}/tinyxml2 -L /usr/lib/x86_64-linux-gnu -L ${LBASE}
+else
+  user-mlmod_SYSINC = -I ${LBASE}/libtorch_cxx11/include -I ${LBASE}/tinyxml2 -I ${LBASE} -I /usr/include
+  user-mlmod_SYSLIB = -l fftw3 -l torch -l torch_cpu -l c10 -l tinyxml2 -l lapacke
+  #user-mlmod_SYSPATH = -L /usr/lib/x86_64-linux-gnu
+  #user-mlmod_SYSPATH = -L $(PWD)/libtorch_cxx11/lib
+  user-mlmod_SYSPATH = -L ${LBASE}/libtorch_cxx11/lib -L ${LBASE}/tinyxml2 -L /usr/lib/x86_64-linux-gnu -L ${LBASE}
+endif
+
