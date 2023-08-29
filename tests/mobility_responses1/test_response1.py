@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-# ### Example for how to use PyTorch models for MLMOD-LAMMPS simulations.
-# Paul J. Atzberger <br>
-# http://atzberger.org
 
 # Shows how to run a simulation in LAMMPS using the PyTorch models.
 import os,sys, shutil, pickle, time;
@@ -89,7 +86,6 @@ def compute_M_ii_rpy1(x,params):
 
 def compute_M_ij_rpy1(x,params):
   
-  #epsilon = 6.0/8.0; eta = 1.0;  # can adjust below for coupling strength    
   dd = params;
   a = dd['a']; epsilon = dd['epsilon']; eta = dd['eta']; eps1 = dd['eps1']; num_dim = 3; 
   
@@ -182,8 +178,6 @@ def compute_full_response(model_case):
   Lc("angle_style none");
 
   # bounding box set up
-  #Lc("region mybox block -18 18 -18 18 -18 18");
-  #Lc("region mybox prism -18 18 -9 9 -18 18 0 0 0"); 
   Lc("region mybox prism -18 18 -18 18 -18 18 0 0 0"); 
   Lc("boundary p p p");
   Lc("create_box 1 mybox");
@@ -208,9 +202,6 @@ def compute_full_response(model_case):
 
   atom_x[:] = xx[:]; 
   atom_v[:] = 0*atom_x[:]; 
-  #atom_id = np.array([1,2],dtype=np.int64);
-  #atom_type = np.array([1,1],dtype=np.int64);
-  #ipdb.set_trace()
 
   print("num_atoms = " + str(atom_x.shape[0]));
   print("atom_type = " + str(atom_type));
@@ -250,9 +241,6 @@ def compute_full_response(model_case):
   force_f2 = np.array([0.0,0.0,0.0]);
   Lc("fix force_f2 cforce2 addforce \
   %.4e %.4e %.4e"%(force_f2[0],force_f2[1],force_f2[2])); # add force to the cforce group
-
-  #fix 1 all langevin 298.15 298.15 0.00001 48279
-  #fix 2 all nve
 
   Lc("dump dmp_vtk_mlmod all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp id type vx fx");
   Lc("dump_modify dmp_vtk_mlmod pad 8"); # ensures filenames file_000000.data
@@ -328,9 +316,6 @@ def compute_full_response(model_case):
     print("");
     print("atom_vv[1,1,:] = " + str(atom_vv[1,0,:]));
     print("v2_ii = " + str(v_predict2_ii));
-
-    #ipdb.set_trace();
-    ii=0;
 
   # total velocity for each particle 
   v_predict1 = v_predict1_ii + v_predict1_ij;
