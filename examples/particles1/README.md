@@ -7,7 +7,7 @@ pytorch models for M(X).
 
 To run the simulation for the python mlmod package, use 
 
-```python run_mlmod_sim1.py```
+```python run_sim_particles1.py```
 
 To generate the PyTorch models, use 
 
