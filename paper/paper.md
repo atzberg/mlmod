@@ -46,12 +46,12 @@ efforts required to incorporate learned system features to augment existing
 models and simulation methods.  Our package ``MLMOD`` aims to address this
 aspect of data-driven modeling by providing a general interface for
 incorporating ML models using standardized representations and by leveraging
-existing simulation frameworks such as LAMMPS [@Plimpton:1995].  Our ``MLMOD``
+existing simulation frameworks such as LAMMPS [@Plimpton:2022].  Our ``MLMOD``
 package provides hooks which are triggered during key parts of simulation
 calculations.  In this way standard machine learning frameworks can be used to
 train ML models, such as PyTorch [@Paszke:2019] and TensorFlow [@Abadi:2015],
 with the resulting models more amenable to being translated into practical
-simulations.  The models obtained from learning can be accomodated in many
+simulations.  The models obtained from learning can be accommodated in many
 forms, including Deep Neural Networks (DNNs) [@Goodfellow:2016], Kernel
 Regression Models (KRM) [@Scholkopf:2001], Gaussian Process Regression (GPR)
 [@Rasmussen:2004], and others [@Hastie:2001].  
@@ -79,14 +79,14 @@ rheological responses of soft materials and complex fluids from microstructure
 interactions [@Atzberger:2013; @Bird:1987; @Lubensky:1997; @Kimura:2009],
 molecular dynamics modeling of protein structures and functional domains from
 atomic level interactions [@Mccammon:1988; @Karplus:2002; @Karplus:1983;
-@Plimpton:1995], and prediction of weather and climate phenomena from detailed
+@Plimpton:2022], and prediction of weather and climate phenomena from detailed
 physical models, sensor data, and other measurements [@Richardson:2007;
 @Bauer:2015].  Obtaining observables and quantities of interest (QoI) from
 simulations of such high fidelity detailed models can involve significant
 computational resources [@Lusk:2011; @Sanbonmatsu:2007; @Washington:2009;
 @Pan:2021; @Murr:2016; @Giessen:2020].  Data-driven learning methods present
 opportunities to formulate more simplified models, provide model flexibility to
-accomodate subtle effects, or make predictions which are less computationally
+accommodate subtle effects, or make predictions which are less computationally
 expensive.
 
 Data-driven modeling can take many forms.  As a specific motivation for the
@@ -147,7 +147,7 @@ For making predictions in unobserved cases, this allows for interpolation, and
 in some cases even extrapolation, especially when using explicit low
 dimensional latent spaces or when imposing other inductive biases
 [@Atzberger:2023; @Atzberger:2022].  For example, consider the colloidal
-example in the simiplified case when we
+example in the simplified case when we
 assume the interactions can be approximated as pairwise.  The problem reduces
 to a model $M = M(\mathbf{X}_1,\mathbf{X}_2)$ depending on six dimensions.
 This can be further constrained to learn only symmetric positive semi-definite
@@ -176,7 +176,7 @@ representation and for interpolation for evaluating $M(\mathbf{X})$.
 
 Machine learning methods also could be used to train more directly from
 simulation data for sampled colloid trajectories $\mathbf{X}(t)$
-[@Atzberger:2023;Nielsen:2000].  The training would select an ML model
+[@Atzberger:2023;@Nielsen:2000].  The training would select an ML model
 $M_\theta$ over some class of models $H$ parameterized by $\theta$, such as the
 weights and biases of a Deep Neural Network.  For instance, this could be done
 by Maximum Likelihood Estimation (MLE) or other losses from the trajectory data
@@ -226,7 +226,7 @@ export ML model formats from machine learning frameworks.](fig/mlmod_schematic3.
 The ``MLMOD`` Package is
 incorporated into a simulation by either using the LAMMPS scripting language or
 the python interface.  This is done using the "fix" command in
-LAMMPS [@Plimpton:1995], with this terminology historically motivated
+LAMMPS [@Plimpton:2022], with this terminology historically motivated
 by algorithms for "fixing" molecular bonds as rigid each time-step.  For our
 package the command to set up the triggers for our algorithms is 
 ``fix m1 mlmod all filename.mlmod_params.``  This specifies the tag "m1" for this fix,
