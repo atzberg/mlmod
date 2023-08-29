@@ -1,2 +1,4 @@
 numpy>=1.21.1
+torch>=1.11.0
+mlmod-lammps @ http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-0.8.0-py3-none-any.whl
 
