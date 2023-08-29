@@ -1,4 +1,6 @@
 numpy>=1.21.1
+
+# may need to adjust distribution below for your platform (see document pages)
 mlmod-lammps @ http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-0.8.0-py3-none-any.whl
 
 # (optional) mlmod-lammps runs without pytorch (used for model generation)
