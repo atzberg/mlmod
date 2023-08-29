@@ -5,12 +5,13 @@
 Simulation of particles that have mobility tensor coupling that is based on
 pytorch models for M(X).
 
-To run the simulation for the python mlmod package use 
+To run the simulation for the python mlmod package, use 
 
 ```python run_mlmod_sim1.py```
 
-To generate the PyTorch model use 
+To generate the PyTorch models, use 
 
-```python gen_mlmod_model1.py```
+```python gen_mlmod_oseen1.py```
+```python gen_mlmod_rpy1.py```
 
 
