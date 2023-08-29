@@ -1,9 +1,6 @@
 #!/usr/bin/env python
-# ### Example for how to use PyTorch models for MLMOD-LAMMPS simulations.
-# Paul J. Atzberger <br>
-# http://atzberger.org
+### Particle simulation with mlmod-based mobility.
 
-# Shows how to run a simulation in LAMMPS using the PyTorch models.
 import os,sys, shutil, pickle, ipdb;
 import numpy as np;
 
@@ -50,26 +47,6 @@ def write_mlmod_params(filename,params):
 
   # pickle file
   f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
-
-
-def compute_M_ii(x,params):
-  dd = params;
-  num_dim = 3; a = dd['a']; epsilon = dd['epsilon']; eta = dd['eta'];  
-  M_ii = np.eye(num_dim)*(1.0/(6*np.pi*eta*a));
-
-  return M_ii;
-
-def compute_M_ij(x,params):
-  dd = params;
-  epsilon = dd['epsilon']; eta = dd['eta']; num_dim = 3; 
-  vec_r_ij = x[0,0:num_dim] - x[1,0:num_dim]; # avoiding tensorizing batch, just one pair assumed
-  r_ij_sq = np.sum(np.power(vec_r_ij,2),0);
-  r_ij = np.sqrt(r_ij_sq);
-
-  eps1 = 1e-12; prefactor = 1.0/(8.0*np.pi*eta*(r_ij + epsilon));
-  M_ij = prefactor*(np.eye(num_dim) + (np.outer(vec_r_ij,vec_r_ij)/(r_ij_sq + eps1)));
-  
-  return M_ij; 
 
 def find_closest_pt(x0,xx):
   dist_sq = np.sum(np.power(xx - np.expand_dims(x0,0),2),1);
