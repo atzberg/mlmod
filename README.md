@@ -3,7 +3,8 @@
 </p>
 
 [Documentation](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
-[Examples](https://github.com/atzberg/mlmod/tree/master/examples) 
+[Examples](https://github.com/atzberg/mlmod/tree/master/examples) |
+[Paper](https://arxiv.org/abs/2107.14362)
                                                                                                 
 ### MLMOD: Machine Learning Methods for Data-Driven Modeling in LAMMPS
 Now available with Jupyter notebooks and Python scripts for readily setting up
