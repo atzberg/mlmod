@@ -4,9 +4,37 @@
 # ------------------------------------------
 #
 # Execute the following installation command:
-#
-# $ sudo apt-get install libvtk7-dev
-#
-vtk_SYSINC = -I /usr/include/vtk-7.1
-vtk_SYSLIB = -l vtkCommonCore-7.1 -l vtkIOCore-7.1 -l vtkIOXML-7.1 -l vtkIOLegacy-7.1 -l vtkCommonDataModel-7.1 -l vtkIOParallelXML-7.1
-vtk_SYSPATH = -L /usr/lib/x86_64-linux-gnu
+
+
+#VTK_VER=7.1
+VTK_VER=6.3
+
+SET_VTK=0
+
+ifeq ($(VTK_VER),7.1) 
+  # $ sudo apt-get install libvtk7-dev
+  #
+  vtk_SYSINC = -I /usr/include/vtk-7.1
+  vtk_SYSLIB = -l vtkCommonCore-7.1 -l vtkIOCore-7.1 -l vtkIOXML-7.1 -l vtkIOLegacy-7.1 -l vtkCommonDataModel-7.1 -l vtkIOParallelXML-7.1
+  vtk_SYSPATH = -L /usr/lib/x86_64-linux-gnu
+  
+  SET_VTK=1
+endif
+
+ifeq ($(VTK_VER),6.3) 
+  # $ sudo apt-get install libvtk7-dev
+  #
+  vtk_SYSINC = -I /usr/include/vtk-6.3
+  vtk_SYSLIB = -l vtkCommonCore-6.3 -l vtkIOCore-6.3 -l vtkIOXML-6.3 -l vtkIOLegacy-6.3 -l vtkCommonDataModel-6.3 -l vtkIOParallelXML-6.3
+  vtk_SYSPATH = -L /usr/lib/x86_64-linux-gnu
+
+  SET_VTK=1
+endif
+
+
+ifeq ($(SET_VTK),0)
+  $(info "WARNING: For VTK, no identified version information set for compiling and linking!")
+  $(info VTK_VER=$(VTK_VER))
+endif
+
+

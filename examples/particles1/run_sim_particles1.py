@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 ### Particle simulation with mlmod-based mobility.
 
-import os,sys, shutil, pickle, ipdb;
+import os,sys, shutil, pickle;
 import numpy as np;
 
 script_base_name = "run_sim_particles1"; script_dir = os.getcwd();
