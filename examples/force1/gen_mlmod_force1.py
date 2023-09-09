@@ -121,7 +121,8 @@ class ML_Force_Model(torch.nn.Module):
     atype = aatype.reshape((num_atoms,1));
 
     # for testing 
-    out = x + v + f + atype*torch.ones((1,num_dim));
+    #out = x + v + f + atype*torch.ones((1,num_dim));
+    out = -0.1*x - 0.01*v;
     out = out.reshape((num_atoms*num_dim,1));  
     
     return out;

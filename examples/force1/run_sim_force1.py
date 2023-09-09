@@ -266,19 +266,21 @@ Lc("neigh_modify every 1");
 Lc("atom_modify sort 0 ${neighborSkinDist}");           # setup sort data explicitly since no interactions to set this data. 
 
 # -- 
-mlmod_params = {'model_type':'F_ML1',
-                'model_data':{
-                  'base_name':force_case,
-                  'base_dir':'./F_ML1_' + force_case,
-                  'mask_fix':'FINAL_INTEGRATE',
-                  'mask_input':'X V F Type',
-                  'F_filename':'F_' + force_case + '.pt',
-                  }
-               };
-filename_mlmod_params = 'F_ML1_' + force_case + '.mlmod_params';
-write_mlmod_params(filename_mlmod_params,mlmod_params);
-#Lc("fix F_ML1_" + force_case " all mlmod " + filename_mlmod_params);
-Lc("fix F_ML1_1 all mlmod " + filename_mlmod_params);
+flag_force=True;
+if flag_force: 
+  mlmod_params = {'model_type':'F_ML1',
+		  'model_data':{
+		    'base_name':force_case,
+		    'base_dir':'./F_ML1_' + force_case,
+		    'mask_fix':'POST_FORCE',
+		    'mask_input':'X V F Type',
+		    'F_filename':'F_' + force_case + '.pt',
+		    }
+		 };
+  filename_mlmod_params = 'F_ML1_' + force_case + '.mlmod_params';
+  write_mlmod_params(filename_mlmod_params,mlmod_params);
+  #Lc("fix F_ML1_" + force_case " all mlmod " + filename_mlmod_params);
+  Lc("fix F_ML1_1 all mlmod " + filename_mlmod_params);
 
 # --
 flag_mobility=False;
@@ -292,9 +294,10 @@ if flag_mobility:
   filename_mlmod_params = 'main.mlmod_params';
   write_mlmod_params(filename_mlmod_params,mlmod_params);
   Lc("fix dX_MF_ML1_1 all mlmod " + filename_mlmod_params);
+else:
+  Lc("fix 1 all nve"); # standard dynamics
 
-
-timestep = 0.35;
+timestep = 0.035;
 Lc("timestep %f"%timestep);
 
 flag_set_force=False;
@@ -325,7 +328,7 @@ Lc("dump_modify dvtk_mlmod1 sort id");
 #Lc("dump_modify dvtk_mlmod2 sort id");
 #Lc("dump_modify dvtk_mlmod3 sort id");
 
-Lc("run 2")
+Lc("run 100")
 
 # gives direct access to memory to lammps
 atom_x = L.numpy.extract_atom("x");  
