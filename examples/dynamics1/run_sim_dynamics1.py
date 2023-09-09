@@ -347,7 +347,7 @@ Lc("dump_modify dvtk_mlmod1 sort id");
 #Lc("dump_modify dvtk_mlmod2 sort id");
 #Lc("dump_modify dvtk_mlmod3 sort id");
 
-Lc("run 2")
+Lc("run 100")
 
 # gives direct access to memory to lammps
 atom_x = L.numpy.extract_atom("x");  

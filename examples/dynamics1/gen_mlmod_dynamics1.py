@@ -122,10 +122,10 @@ class ML_Dynamics1_Model(torch.nn.Module):
 
     # for testing 
     #out_x = x + v + f + atype*torch.ones((1,num_dim));
-    out_x = 0.1*x;
+    out_x = 0.999*x;
     out_x = out_x.reshape((num_atoms*num_dim,1));  
 
-    out_v = 0.2*v;
+    out_v = 0.998*v;
     out_v = out_v.reshape((num_atoms*num_dim,1));  
    
     out = torch.vstack((out_x,out_v));
@@ -224,10 +224,10 @@ class ML_Dynamics2_Model(torch.nn.Module):
 
     # for testing 
     #out_x = x + v + f + atype*torch.ones((1,num_dim));
-    out_x = 0.3*x;
+    out_x = 0.998*x;
     out_x = out_x.reshape((num_atoms*num_dim,1));  
 
-    out_v = 0.4*v;
+    out_v = 0.997*v;
     out_v = out_v.reshape((num_atoms*num_dim,1));  
    
     out = torch.vstack((out_x,out_v));
