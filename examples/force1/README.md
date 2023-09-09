@@ -2,7 +2,7 @@
 <img src="doc_img/force1.png" width="15%"> 
 </p>
 
-Simulation using a force that acts on particles from a pytorch model F(X).
+Simulation using a force that acts on particles from a pytorch model $F(X)$.
 
 To run the simulation for the python mlmod package, use 
 
