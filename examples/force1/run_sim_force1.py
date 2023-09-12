@@ -52,6 +52,52 @@ def write_mlmod_F_ML1_params(filename,params):
   # pickle file
   f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
 
+def write_mlmod_F_X_ML1_params(filename,params):
+  model_type = params['model_type']; model_data = params['model_data'];
+  base_name, base_dir, mask_fix, mask_input, F_filename = tuple(map(model_data.get,\
+                                  ['base_name', 'base_dir', 'mask_fix', 
+                                   'mask_input', 'F_filename']));
+  
+  # xml file
+  f = open(filename,'w');
+  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
+  f.write('<MLMOD>\n');
+  f.write('<model_data type="' + model_type + '">\n');
+  f.write('<base_name value="' + base_name + '"/>\n');
+  f.write('<base_dir value="' + base_dir + '"/>\n');
+  f.write('<mask_fix value="' + mask_fix + '"/>\n');
+  f.write('<mask_input value="' + mask_input + '"/>\n');
+  f.write('<F_filename value="' + F_filename + '"/>\n');
+  f.write('</model_data>\n');
+  f.write('</MLMOD>\n');
+  f.close();
+
+  # pickle file
+  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
+
+def write_mlmod_F_Pair_ML1_params(filename,params):
+  model_type = params['model_type']; model_data = params['model_data'];
+  base_name, base_dir, mask_fix, mask_input, F_filename = tuple(map(model_data.get,\
+                                  ['base_name', 'base_dir', 'mask_fix', 
+                                   'mask_input', 'F_filename']));
+  
+  # xml file
+  f = open(filename,'w');
+  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
+  f.write('<MLMOD>\n');
+  f.write('<model_data type="' + model_type + '">\n');
+  f.write('<base_name value="' + base_name + '"/>\n');
+  f.write('<base_dir value="' + base_dir + '"/>\n');
+  f.write('<mask_fix value="' + mask_fix + '"/>\n');
+  f.write('<mask_input value="' + mask_input + '"/>\n');
+  f.write('<F_filename value="' + F_filename + '"/>\n');
+  f.write('</model_data>\n');
+  f.write('</MLMOD>\n');
+  f.close();
+
+  # pickle file
+  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
+
 def write_mlmod_Dyn_ML1_params(filename,params):
   model_type = params['model_type']; model_data = params['model_data'];
   base_name, base_dir, mask_fix, mask_input, dyn1_filename, dyn2_filename = tuple(map(model_data.get,\
@@ -267,8 +313,11 @@ Lc("atom_modify sort 0 ${neighborSkinDist}");           # setup sort data explic
 
 # -- 
 flag_force=True;
+#force_type='F_ML1';
+force_type='F_X_ML1';
+#force_type='F_Pair_ML1';
 if flag_force: 
-  mlmod_params = {'model_type':'F_ML1',
+  mlmod_params = {'model_type':force_type,
 		  'model_data':{
 		    'base_name':force_case,
 		    'base_dir':'./F_ML1_' + force_case,
@@ -277,10 +326,10 @@ if flag_force:
 		    'F_filename':'F_' + force_case + '.pt',
 		    }
 		 };
-  filename_mlmod_params = 'F_ML1_' + force_case + '.mlmod_params';
+  filename_mlmod_params = force_type + '_' + force_case + '.mlmod_params';
   write_mlmod_params(filename_mlmod_params,mlmod_params);
   #Lc("fix F_ML1_" + force_case " all mlmod " + filename_mlmod_params);
-  Lc("fix F_ML1_1 all mlmod " + filename_mlmod_params);
+  Lc("fix %s_1 all mlmod "%force_type + filename_mlmod_params);
 
 # --
 flag_mobility=False;
