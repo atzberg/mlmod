@@ -320,6 +320,7 @@ flag_force=True;
 #force_type='F_ML1';
 force_type='F_X_ML1';
 #force_type='F_Pair_ML1';
+print("force_type = " + force_type);
 if flag_force: 
   mlmod_params = {'model_type':force_type,
 		  'model_data':{
