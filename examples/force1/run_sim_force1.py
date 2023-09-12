@@ -169,6 +169,10 @@ def write_mlmod_params(filename,params):
     write_mlmod_dX_MF_ML1_params(filename,params);
   elif params['model_type'] == 'F_ML1': 
     write_mlmod_F_ML1_params(filename,params);
+  elif params['model_type'] == 'F_X_ML1': 
+    write_mlmod_F_X_ML1_params(filename,params);
+  elif params['model_type'] == 'F_Pair_ML1': 
+    write_mlmod_F_Pair_ML1_params(filename,params);
   elif params['model_type'] == 'Dyn_ML1': 
     write_mlmod_Dyn_ML1_params(filename,params);
   elif params['model_type'] == 'QoI_ML1': 
