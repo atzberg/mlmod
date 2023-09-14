@@ -6,20 +6,25 @@
   http://atzberger.org/
   
   Please cite the follow paper when referencing this package
- 
-  "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
-  Atzberger, P. J., arXiv:2107.14362, 2021.
-  
-  @article{mlmod_atzberger,
-    title = {MLMOD Package: Machine Learning Methods for Data-Driven 
-             Modeling in LAMMPS},
-    author = {Atzberger, P. J.},
-    journal = {arxiv},
-    year = {2021},
-    doi = {https://arxiv.org/abs/2107.14362},
-    URL = {http://atzberger.org/},
-  }
     
+  "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
+  P.J. Atzberger, Journal of Open Source Software, 8(89), 5620, (2023) 
+
+  @article{mlmod_atzberger,
+    author    = {Paul J. Atzberger},
+    journal   = {Journal of Open Source Software}, 
+    title     = {MLMOD: Machine Learning Methods for Data-Driven 
+                 Modeling in LAMMPS},
+    year      = {2023},  
+    publisher = {The Open Journal},
+    volume    = {8},
+    number    = {89},
+    pages     = {5620},
+    note      = {http://atzberger.org},
+    doi       = {10.21105/joss.05620},
+    url       = {https://doi.org/10.21105/joss.05620}
+  }
+
   For latest releases, examples, and additional information see 
   http://atzberger.org/
 
@@ -47,7 +52,7 @@
 
 /* MLMOD_includes */
 #include "fix_mlmod.h"
-#include "wrapper/wrapper_mlmod.h"
+#include "include/mlmod.h"
 
 //using namespace MLMOD;
 using namespace LAMMPS_NS;
@@ -72,7 +77,7 @@ FixMLMOD::FixMLMOD() : Fix(NULL, 0, NULL) {
   /* WARNING: May need to modify LAMMPS codes so that we have
               Fix(NULL, 0, NULL) acts like empty constructor */
 
-  //wrapper_mlmod = new WrapperMLMOD();
+  //mlmod = new MLMOD();
    
 }
 
@@ -85,7 +90,7 @@ FixMLMOD::FixMLMOD(LAMMPS *lmp, int narg, char **arg) : Fix(lmp, narg, arg)
   time_integrate = 1; /* set to 1 for fix performing integration, 0 if fix does not */
   
   /* setup the wrapper for MLMOD library */
-  wrapper_mlmod = new WrapperMLMOD(this,lmp,narg,arg);
+  mlmod = new MLMOD(this,lmp,narg,arg);
   
 }
 
@@ -99,7 +104,7 @@ FixMLMOD::~FixMLMOD() {
 
 void FixMLMOD::setup(int vflag) { /* lammps setup */
 
-  wrapper_mlmod->setup(vflag);
+  mlmod->setup(vflag);
   
 }
 
@@ -112,11 +117,11 @@ int FixMLMOD::setmask()
    */
 
   // pass back value
-  //MLMOD_integrator_mask = wrapper_mlmod->setmask();
+  //MLMOD_integrator_mask = mlmod->setmask();
 
   //return MLMOD_integrator_mask; /* syncronize the MLMOD mask with that returned to LAMMPS */
 
-  return wrapper_mlmod->setmask();
+  return mlmod->setmask();
 }
 
 /* ---------------------------------------------------------------------- */
@@ -124,7 +129,7 @@ void FixMLMOD::pre_exchange()
 {
 
   /* pass to integrator to handle */
-  wrapper_mlmod->pre_exchange();
+  mlmod->pre_exchange();
 
 }
 
@@ -133,7 +138,7 @@ void FixMLMOD::end_of_step()
 {
 
   /* pass to integrator to handle */
-  wrapper_mlmod->end_of_step();
+  mlmod->end_of_step();
 
 }
 
@@ -158,7 +163,7 @@ void FixMLMOD::init()
 
   /* == Initialize data structures for MLMOD. */
   /* integrator trigger fix_init() for any associated initialization */
-  wrapper_mlmod->init_from_fix();
+  mlmod->init_from_fix();
 }
 
 /* ----------------------------------------------------------------------
@@ -174,8 +179,7 @@ void FixMLMOD::init()
 void FixMLMOD::initial_integrate(int vflag)
 {
 
-  /* == Perform the update of the fluid and particles */
-  wrapper_mlmod->initial_integrate(vflag);
+  mlmod->initial_integrate(vflag);
 
 }
 
@@ -184,8 +188,16 @@ void FixMLMOD::initial_integrate(int vflag)
 void FixMLMOD::final_integrate()
 {
 
-  /* == Perform the update of the Eulerian-Lagrangian system */
-  wrapper_mlmod->final_integrate();
+  mlmod->final_integrate();
+
+}
+
+/* ---------------------------------------------------------------------- */
+
+double FixMLMOD::compute_array(int i, int j)
+{
+
+  return mlmod->compute_array(i,j);
 
 }
 
@@ -193,11 +205,11 @@ void FixMLMOD::final_integrate()
 
 void FixMLMOD::reset_dt()
 {
-  wrapper_mlmod->reset_dt();
+  mlmod->reset_dt();
 }
 
 void FixMLMOD::post_force(int vflag) {
-  wrapper_mlmod->post_force(vflag);
+  mlmod->post_force(vflag);
 }
 
 

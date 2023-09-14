@@ -22,7 +22,7 @@ ifeq ($(VTK_VER),7.1)
 endif
 
 ifeq ($(VTK_VER),6.3) 
-  # $ sudo apt-get install libvtk7-dev
+  # $ sudo apt-get install libvtk6-dev
   #
   vtk_SYSINC = -I /usr/include/vtk-6.3
   vtk_SYSLIB = -l vtkCommonCore-6.3 -l vtkIOCore-6.3 -l vtkIOXML-6.3 -l vtkIOLegacy-6.3 -l vtkCommonDataModel-6.3 -l vtkIOParallelXML-6.3

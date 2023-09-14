@@ -14,20 +14,25 @@
   http://atzberger.org/
   
   Please cite the follow paper when referencing this package
- 
-  "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
-  Atzberger, P. J., arXiv:2107.14362, 2021.
-  
-  @article{mlmod_atzberger,
-    author  = {Atzberger, P. J.},
-    journal = {arxiv},
-    title   = {MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
-    year    = {2021},
-    note    = {http://atzberger.org},
-    doi     = {10.48550/arXiv.2107.14362},
-    url     = {https://arxiv.org/abs/2107.14362},
-  }
     
+  "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
+  P.J. Atzberger, Journal of Open Source Software, 8(89), 5620, (2023) 
+
+  @article{mlmod_atzberger,
+    author    = {Paul J. Atzberger},
+    journal   = {Journal of Open Source Software}, 
+    title     = {MLMOD: Machine Learning Methods for Data-Driven 
+                 Modeling in LAMMPS},
+    year      = {2023},  
+    publisher = {The Open Journal},
+    volume    = {8},
+    number    = {89},
+    pages     = {5620},
+    note      = {http://atzberger.org},
+    doi       = {10.21105/joss.05620},
+    url       = {https://doi.org/10.21105/joss.05620}
+  }
+
   For latest releases, examples, and additional information see 
   http://atzberger.org/
       
@@ -59,15 +64,15 @@ FixStyle(mlmod,FixMLMOD)
 
 // forward declaration
 //namespace MLMOD {
-//struct WrapperMLMOD;
+//struct MLMOD;
 //}
 
 using namespace std;
 
 namespace LAMMPS_NS {
 
-//class WrapperMLMOD;
-class WrapperMLMOD;
+//class MLMOD;
+class MLMOD;
 
 class FixMLMOD : public Fix {
 
@@ -94,15 +99,23 @@ class FixMLMOD : public Fix {
 
   ~FixMLMOD();
 
+  /** @brief Lammps calls to set the mask for when to call into the fix. **/
   int          setmask();
+
+  /** @brief Lammps calls when initializing the fix. **/
   virtual void init();
+
+  /** @brief Lammps calls to setup the fix. **/
   void         setup(int vflag);
 
   /** @brief Lammps calls at the start of each timestep. **/
-  virtual void initial_integrate(int);
+  void initial_integrate(int);
 
   /** @brief Lammps calls at the end of each timestep. **/
-  virtual void final_integrate();
+  void final_integrate();
+
+  /** @brief Lammps calls when retrieving array data. **/
+  double compute_array(int i, int j);
 
   /** @brief Lammps calls when timestep size changes. **/
   void         reset_dt();
@@ -111,7 +124,11 @@ class FixMLMOD : public Fix {
   void         post_force(int vflag);
   
   // additional methods/hooks
+
+  /** @brief Lammps calls before exchanging data between processors.. **/
   void pre_exchange();
+
+  /** @brief Lammps calls at the very end of a time-step.. **/
   void end_of_step();
 
   /* =========================== Function Calls =========================== */
@@ -119,10 +136,10 @@ class FixMLMOD : public Fix {
   /* =========================== Variables =========================== */
 
   /** @brief Reference to the lammps instance. **/
-  LAMMPS                                             *lammps; /* lammps data */
+  LAMMPS *lammps; /* lammps data */
 
   /** @brief Reference to the mlmod library wrapper. **/
-  WrapperMLMOD                                       *wrapper_mlmod;
+  MLMOD *mlmod;
 
 };
 

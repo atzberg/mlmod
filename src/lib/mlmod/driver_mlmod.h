@@ -15,20 +15,25 @@
   http://atzberger.org/
   
   Please cite the follow paper when referencing this package
-  
-  "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
-  Atzberger, P. J., arXiv:2107.14362, 2021.
-  
-  @article{mlmod_atzberger,
-    author  = {Atzberger, P. J.},
-    journal = {arxiv},
-    title   = {MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
-    year    = {2021},
-    note    = {http://atzberger.org},
-    doi     = {10.48550/arXiv.2107.14362},
-    url     = {https://arxiv.org/abs/2107.14362},
-  }
     
+  "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
+  P.J. Atzberger, Journal of Open Source Software, 8(89), 5620, (2023) 
+
+  @article{mlmod_atzberger,
+    author    = {Paul J. Atzberger},
+    journal   = {Journal of Open Source Software}, 
+    title     = {MLMOD: Machine Learning Methods for Data-Driven 
+                 Modeling in LAMMPS},
+    year      = {2023},  
+    publisher = {The Open Journal},
+    volume    = {8},
+    number    = {89},
+    pages     = {5620},
+    note      = {http://atzberger.org},
+    doi       = {10.21105/joss.05620},
+    url       = {https://doi.org/10.21105/joss.05620}
+  }
+
   For latest releases, examples, and additional information see 
   http://atzberger.org/
  
@@ -97,6 +102,7 @@ struct DriverMLMOD {
 
   /** The deconstructor. */
   ~DriverMLMOD();
+  void destructor_dX_MF_Q1_ML1_Pair();
 
   // =========================== Fix Related Function Calls ==================== */
   /** Lammps interface code for signaling the type of simulation. */
@@ -107,6 +113,7 @@ struct DriverMLMOD {
 
   /** Used for setting up references in the driver after lammps is initialized. */
   void         setup(int vflag);
+  void setup_QoI_ML1(int vflag);
 
   /** Lammps calls this routine at the start of each time-step. */
   virtual void initial_integrate(int);
@@ -125,33 +132,37 @@ struct DriverMLMOD {
 
   /** Lammps calls this at the end of a simulation step. */
   void end_of_step();
+  void end_of_step_QoI_ML1();
+
+  /** Lammps calls this to extract an array of data from the fix. */
+  double compute_array(int i, int j);
+  double compute_array_QoI_ML1(int i, int j);
 
   /* =========================== MLMOD Function Calls =========================== */
-  /** This is called from mlmod routines in lammps to initializes the driver
-   * class attributes. */
+  /** This is called from mlmod routines in lammps to initializes the driver 
+      class attributes. 
+  **/
   void init_attributes();
 
-  /** This is called from mlmod routines in lammps when the "fix" is setup.. */
+  /** This is called from mlmod routines in lammps when the "fix" is setup. **/
   void init_from_fix();
 
-  /** Creates tensors for positions, velocity, and forces from lammps.  */
-  void constr_input_masked(at::TensorAccessor<float,2,at::DefaultPtrTraits,long> input_m_a,
-                           int num_indices,int *indices,
-                           int mask_input, int mask_list_n, int *mask_list,
-                           double **x,double **v,double **f, int *type);
 
-  /** Parses the parameters from the xml files associated with the model_type.*/
+  /** Parses the parameters from the xml files associated with the model_type. **/
   void parse_xml_params(char *filename);
   
-  /** Writes additional simulation data to disk each time-step. */
+  /** Parses the parameters from the xml files associated with the model_type. **/
+  void params_parse(int narg, char **arg);
+
+  /** Writes additional simulation data to disk each time-step. **/
   //void writeAllSimulationData(int timeIndex);
 
   /** Writes a file giving information about the current simulation for
-   * post-processing scripts.*/
-  void writeInfo();
+      post-processing scripts. **/
+  void write_info();
 
-  /** Writes a file for the final step of the simulation, see writeInfo().*/
-  void writeFinalInfo();
+  /** Writes a file for the final step of the simulation, see write_info(). **/
+  void write_final_info();
 
   /* ===== case specific functions ===== */
 
@@ -179,36 +190,77 @@ struct DriverMLMOD {
   **/
   void initial_integrate_dX_MF_Q1_ML1_N2N();  
 
-  /** @brief Computes an ML model for the force.
-   *
+  /** @brief Computes an ML model for a force determined and applied collectively for all the particles 
+      in the designated group \f$ \mathbf{X} = \{\mathbf{X}_i\}_{i \in \mathcal{G}} \f$, where
+      \f$ F(\mathbf{X},\mathbf{V},\mathbf{F},\mathbf{I_T},t) \f$.
    **/
-  void initial_integrate_F_ML1();  
+  void post_force_F_ML1();  
 
-  /** @brief Computes an ML model for for a quantity of interest (QoI).
-   *
+  /** @brief Computes an ML model for a force applied individually to each particle \f$ \mathbf{X}_i \f$,
+      with 
+      \f$ F_i(\mathbf{X}_i,\mathbf{V}_i,\mathbf{F}_i,\mathbf{I_T}_i,t) \f$.
+      To compute forces collectively over the particles, see post_force_F_ML1().
+   **/
+  void post_force_F_X_ML1();  
+
+  /** @brief Computes an ML model for a force applied on pairs of particles within the designated group, 
+      \f$ \mathbf{X}_{ij} = (\mathbf{X}_i,\mathbf{X}_j) \f$ for $i,j \in \mathcal{G}$, with 
+      \f$ F_{ij}(\mathbf{X}_{ij},\mathbf{V}_{ij},\mathbf{F}_{ij},\mathbf{I_T}_{ij},t) \f$.
+      To compute forces collectively over the particles, see post_force_F_ML1().
+   **/
+  void post_force_F_Pair_ML1();  
+
+  /** @brief Computes an ML model for a quantity of interest (QoI),
+       \f$ Q(\mathbf{X},\mathbf{V},\mathbf{F}) \f$.
    **/
   void initial_integrate_QoI_ML1();  
 
-  /** @brief Computes an ML model for particle dynamics. 
-   *
+  /** @brief Computes an ML model for the particle dynamics,
+      \f$ \mathbf{X}^{n+1} = \Gamma(\mathbf{X}^n,\mathbf{V}^n,\mathbf{F}^n,t_n) \f$.
+      Depending on the mask_fix settings this can be a single time-step or 
+      Verlet-style integrator.  The initial step uses the machine learning model 
+      specified in dyn1_filenmae and the final step the model in dyn2_filename.  
+      See the documentation pages and examples for more details.  
    **/
   void initial_integrate_Dyn_ML1();  
 
-  /** @brief Called at end of integration steps. */ 
-  void final_integrate_dX_MF();  /**< See initial_integrate_dX_MF(). */
-  void final_integrate_dX_MF_ML1();  /**< See initial_integrate_dX_MF_ML1(). */
-  void final_integrate_dX_MF_Q1_ML1_Pair(); /**< See initial_integrate_dX_MF_Q1_ML1_Pair(). */
-  void final_integrate_dX_MF_Q1_ML1_N2N();   /**< See initial_integrate_dX_MF_Q1_ML1_N2N(). */
-  void final_integrate_F_ML1();   /**< See initial_integrate_F_ML1(). */
-  void final_integrate_QoI_ML1();   /**< See initial_integrate_QoI_ML1(). */
-  void final_integrate_Dyn_ML1();   /**< See initial_integrate_Dyn_ML1(). */
+  /** @brief Dynamic integrator with ML model for the mobility tensor \f$M(\mathbf{X})\f$
+    for pairwise interactions for a collection of particles with <br/>  
+    \f$ 
+      {d\mathbf{X}}/{dt} = \mathbf{M}(\mathbf{X})\mathbf{F}. 
+    \f$
+  **/
+  void final_integrate_dX_MF_ML1(); 
 
-  /** @brief Parsers for the specific model cases. */ 
+  /** @brief Dynamic integrator for a test mobility tensor \f$M(\mathbf{X})\f$
+    for pairwise interactions for a collection of particles with <br/>  
+    \f$ 
+      {d\mathbf{X}}/{dt} = \mathbf{M}(\mathbf{X})\mathbf{F}. 
+    \f$
+  **/
+  void final_integrate_dX_MF(); 
+
+  void final_integrate_dX_MF_Q1_ML1_Pair(); /**< See initial_integrate_dX_MF_Q1_ML1_Pair(). **/
+  void final_integrate_dX_MF_Q1_ML1_N2N();   /**< See initial_integrate_dX_MF_Q1_ML1_N2N(). **/
+
+  void final_integrate_QoI_ML1();   /**< See initial_integrate_QoI_ML1(). **/
+
+  /** @brief Dynamic integrator based on specified machine learning model.
+    For a Verlet-style integrator this calls the second half of the integration 
+    step using the model specified by dyn2_filenmae.   For more details, 
+    see initial_integrate_Dyn_ML1().  
+  **/
+  void final_integrate_Dyn_ML1();
+
+
+  /** @brief Parsers for the specific model cases. **/ 
   void parse_xml_params_dX_MF(XMLElement *model_data_element); 
   void parse_xml_params_dX_MF_ML1(XMLElement *model_data_element);
   void parse_xml_params_dX_MF_Q1_ML1_Pair(XMLElement *model_data_element);
   void parse_xml_params_dX_MF_Q1_ML1_N2N(XMLElement *model_data_element);
   void parse_xml_params_F_ML1(XMLElement *model_data_element);
+  void parse_xml_params_F_X_ML1(XMLElement *model_data_element);
+  void parse_xml_params_F_Pair_ML1(XMLElement *model_data_element);
   void parse_xml_params_QoI_ML1(XMLElement *model_data_element);
   void parse_xml_params_Dyn_ML1(XMLElement *model_data_element);
 
@@ -217,24 +269,142 @@ struct DriverMLMOD {
   
   void parse_mask_fix_str(const char *mask_str,int *mask_ptr);
 
-  /** @brief Display information.  */ 
+  /** 
+   @brief Creates a vector array x[][] for storing double precision floating point values.
+
+   @param num_cols: number of dimensions
+   @param num_rows: number of indices
+   @param db_vec_block: block of memory for vector (set to zero to allocate)
+   @param db_vec_size: size of the block of memory allocated
+
+   @return (double **) vector array with shape=[num_rows,num_cols].
+   
+  **/
+  double** create_db_vec(int num_rows, int num_cols, 
+                         double **db_vec_block, 
+                         int *db_vec_size);
+
+  /** 
+   @brief Sets a vector array x[][] from torch tensor data a[:][0]. 
+   
+   This implements a copy of the form
+   x[i][d] = a[I + offset][0], where I = i*num_cols + d
+   x.shape=[n,num_cols], a.shape=[n*num_cols,1]
+
+   @param double**: vector array, (typical shape=[n,num_cols])
+   @param output_m: torch tensor 
+   @param num_cols: number of dimensions
+   @param num_rows: number of indices
+   @param rowII: subset of indices to set (rowII=NULL, use all)
+   @param offset_tensor: for tensor array, offset for start of values
+   
+  **/
+  void set_db_vec_to_tensor_full(double **z,
+                                 at::Tensor output_m,
+                                 int num_rows, int num_cols, int *rowII, 
+                                 int offset_tensor);
+
+  /** 
+   @brief Sets a vector array x[][] from torch tensor data a[:][0]. 
+   
+   This implements a copy of the form
+   x[i][d] += a[I + offset][0], where I = i*num_cols + d
+   x.shape=[n,num_cols], a.shape=[n*num_cols,1]
+
+   @param double**: vector array, (typical shape=[n,num_cols])
+   @param output_m: torch tensor 
+   @param num_cols: number of dimensions
+   @param num_rows: number of indices
+   @param rowII: subset of indices to set (rowII=NULL, use all)
+   @param offset_tensor: for tensor array, offset for start of values
+   
+  **/
+  void add_tensor_full_to_db_vec(double **z,
+                                 at::Tensor output_m,
+                                 int num_rows, int num_cols, int *rowII, 
+                                 int offset_tensor);
+
+  /** 
+   @brief Sets a vector array x[][] from torch tensor data a[:][0]
+   which has the same overall size as x. 
+   
+   This implements a copy of the form
+   x[iii][d] += a[I + offset][0], where I = iii*num_cols + d,
+   iii = rowII[i], x.shape=[num_rows,num_cols], a.shape=[num_rows*num_cols,1].
+   
+
+   @param double**: vector array, (typical shape=[n,num_cols])
+   @param output_m: torch tensor 
+   @param num_cols: number of dimensions
+   @param num_rows: number of indices
+   @param rowII: subset of indices to set (rowII=NULL, use all)
+   @param offset_tensor: for tensor array, offset for start of values
+   
+  **/
+  void add_tensor_seg_to_db_vec(double **z,
+                                at::Tensor output_m,
+                                int num_rows, int num_cols, int *rowII, 
+                                int offset_tensor);
+
+  /** 
+   @brief Sets a vector array x[][] to zero. 
+   
+   This implements a copy of the form
+   x[i][d] = 0.0
+   x.shape=[n,num_cols], a.shape=[n*num_cols,1]
+
+   @param double**: vector array, (typical shape=[n,num_cols])
+   @param num_cols: number of dimensions
+   @param num_rows: number of indices
+   @param rowII: subset of indices to set (rowII=NULL, use all)
+   
+  **/
+  void set_to_zero_db_vec(double **z,
+                          int num_rows, int num_cols, int *rowII);
+
+  /** Get tensor size given the masks and groups from lammps.  **/
+  int get_tensor_input_size(int num_II,int *II, int num_dim, 
+                            int mask_input, int mask_list_n, int *mask_list,
+                            int groupbit, int *mask_atom);
+
+  /** Creates tensors for positions, velocity, and forces from lammps.  **/
+  void build_tensor_from_masks(at::TensorAccessor<float,2,at::DefaultPtrTraits,long> input_m_a,
+                               int num_indices,int *indices,
+                               int mask_input, int mask_list_n, int *mask_list,
+                               int groupbit, int *mask_atom,
+                               double **x,double **v,double **f, int *type,double time);
+
+  /** Get indices for group from lammps.  **/
+  void get_indices_for_group(int groupbit,int *mask_atom, int nlocal, 
+                             int *II_size_ptr, int **II_ptr, int *num_II_ptr);
+
+  /** @brief Display information.  **/ 
   void print_tensor_2d(const char *name, at::Tensor t);
 
-  /** @brief Writing tensor arrays to disk for processing and debugging.  */ 
+  /** @brief Writing tensor arrays to disk for processing and debugging.  **/ 
   void write_array_txt_1D(const char *filename,int n,double *v);
   void write_array_txt_2D(const char *filename,int m,int n,double **A);
 
+  /** @brief Test codes helpful in debugging.  **/ 
+  void test1();  
+  void test2();
+ 
   /* =========================== Variables =========================== */
   LAMMPS                              *lammps;     /**< lammps instance */
 
   /** Declaration allows access to internal members for our lammps "fix" interface */
   friend class FixMLMOD; 
+  friend class Fix; 
+  friend class Update; 
 
   FixMLMOD                            *fixMLMOD;   /**< our lammps "fix"
                                                      interface instance  */
   
   int                                  mlmod_seed; /**< seed for random number
                                                      generator  */
+  int                                  flag_verbose; /** level of output to print */
+  string                               params_filename; /* parameter filename */
+
   RanMars                             *random;     /**< random number generator
                                                      */
 
@@ -265,25 +435,77 @@ struct DriverMLMOD {
   int MODEL_TYPE_F_ML1;
   string MODEL_TYPE_STR_F_ML1;
 
+  int MODEL_TYPE_F_X_ML1;
+  string MODEL_TYPE_STR_F_X_ML1;
+
+  int MODEL_TYPE_F_Pair_ML1;
+  string MODEL_TYPE_STR_F_Pair_ML1;
+
   int MODEL_TYPE_QoI_ML1;
   string MODEL_TYPE_STR_QoI_ML1;
 
   int MODEL_TYPE_Dyn_ML1;
   string MODEL_TYPE_STR_Dyn_ML1;
 
+  int IN_X;
+  string IN_X_str;
+
+  int IN_V;
+  string IN_V_str;
+
+  int IN_F;
+  string IN_F_str;
+
+  int IN_Type;
+  string IN_Type_str;
+
+  int IN_Time;
+  string IN_Time_str;
+
+  int IN_num_types;
+
   /** @brief Data for hydrodynamic model case (used primarily for testing) */
   typedef struct {
     double eta;
     double a;
     double epsilon;
+
+    /** internal variables */
+    int      flag_init;   
+
+    string *mask_input_str; 
+    string *mask_fix_str;
+
+    int  mask_input;
+    int  mask_list_n;
+    int *mask_list;
+    int  input_size;
+
+    int mask_fix;
+
   } ModelData_dX_MF_Type;
 
   /** @brief Data for a basic ML mobility-based simulation  */
   typedef struct { // note make object references pointers (setup later)
     string *M_ii_filename; /**< filename for the ML model for the self-mobility tensor components */
     string *M_ij_filename; /**< filename for the ML model for pair-mobility tensor components */
-    torch::jit::script::Module *M_ii_model; /**< torch ML model for self-mobility */
-    torch::jit::script::Module *M_ij_model; /**< torch ML model for pair-mobility */
+
+    torch::jit::Module *M_ii_model; /**< torch ML model for self-mobility */
+    torch::jit::Module *M_ij_model; /**< torch ML model for pair-mobility */
+
+    /** internal variables */
+    int      flag_init;   
+
+    string *mask_input_str; 
+    string *mask_fix_str;
+
+    int  mask_input;
+    int  mask_list_n;
+    int *mask_list;
+    int  input_size;
+
+    int mask_fix;
+
   } ModelData_dX_MF_ML1_Type;
 
   /** @brief Data for an overdamped stochastic ML mobility-based simulation, 
@@ -294,8 +516,8 @@ struct DriverMLMOD {
     string *M_ii_filename;
     string *M_ij_filename;
 
-    torch::jit::script::Module *M_ii_model;
-    torch::jit::script::Module *M_ij_model;
+    torch::jit::Module *M_ii_model;
+    torch::jit::Module *M_ij_model;
     
     int    flag_stochastic; /*< flag for fluctuations */
     double KBT;             /*< themal energy */
@@ -303,11 +525,21 @@ struct DriverMLMOD {
     int    flag_thm_drift;  /*< flag for drift term */
     double delta;           /*< \f$\delta\f$ for drift calculation */
 
+
     // --
     // for saving needed info between integration steps
-    
     /** internal variables */
     int      flag_init;   
+
+    string *mask_input_str; 
+    string *mask_fix_str;
+
+    int  mask_input;
+    int  mask_list_n;
+    int *mask_list;
+    int  input_size;
+
+    int mask_fix;
 
     int      num_II;     
     int      II_size;   
@@ -349,7 +581,7 @@ struct DriverMLMOD {
   /** @brief State information for specified simulation modality. */
   typedef struct { // note make object references pointers (setup later)
     string *M_filename;
-    torch::jit::script::Module *M_model;
+    torch::jit::Module *M_model;
     
     int    flag_stochastic;
     double KBT;
@@ -359,11 +591,22 @@ struct DriverMLMOD {
 
     // --
     // for saving needed info between integration steps
-    int      flag_init;
+    /** internal variables */
+    int      flag_init;   
 
-    int      num_II;
-    int      II_size;
-    int*     II;
+    string *mask_input_str; 
+    string *mask_fix_str;
+
+    int  mask_input;
+    int  mask_list_n;
+    int *mask_list;
+    int  input_size;
+
+    int mask_fix;
+
+    int      num_II;     
+    int      II_size;   
+    int*     II;       
 
     double*  xi_block;
     double** xi;
@@ -404,7 +647,7 @@ struct DriverMLMOD {
     string *base_name;
 
     string *F_filename;
-    torch::jit::script::Module *F_model;
+    torch::jit::Module *F_model;
 
     string *mask_input_str; 
     
@@ -425,8 +668,6 @@ struct DriverMLMOD {
 
     int mask_fix;
 
-    int IN_X,IN_V,IN_F,IN_Type;
-
   } ModelData_F_ML1_Type;
 
   /** @brief State information for specified simulation modality. */
@@ -434,8 +675,66 @@ struct DriverMLMOD {
     string *base_dir;
     string *base_name;
 
-    string *QoI_filename;
-    torch::jit::script::Module *QoI_model;
+    string *F_filename;
+    torch::jit::Module *F_model;
+
+    string *mask_input_str; 
+    
+    string *mask_fix_str;
+
+    // --
+    // for saving needed info between integration steps
+    int      flag_init;
+
+    int      num_II;
+    int      II_size;
+    int*     II;
+
+    int  mask_input;
+    int  mask_list_n;
+    int *mask_list;
+    int  input_size;
+
+    int mask_fix;
+
+  } ModelData_F_X_ML1_Type;
+
+  /** @brief State information for specified simulation modality. */
+  typedef struct { // note make object references pointers (setup later)
+    string *base_dir;
+    string *base_name;
+
+    string *F_filename;
+    torch::jit::Module *F_model;
+
+    string *mask_input_str; 
+    
+    string *mask_fix_str;
+
+    // --
+    // for saving needed info between integration steps
+    int      flag_init;
+
+    int      num_II;
+    int      II_size;
+    int*     II;
+
+    int  mask_input;
+    int  mask_list_n;
+    int *mask_list;
+    int  input_size;
+
+    int mask_fix;
+
+  } ModelData_F_Pair_ML1_Type;
+
+  /** @brief State information for specified simulation modality. */
+  typedef struct { // note make object references pointers (setup later)
+    string *base_dir;
+    string *base_name;
+
+    string *qoi_filename;
+    torch::jit::Module *QoI_model;
 
     string *mask_input_str; 
 
@@ -458,7 +757,12 @@ struct DriverMLMOD {
 
     int mask_fix;
 
-    int IN_X,IN_V,IN_F,IN_Type;
+    int      flag_val_qoi;
+    int      qoi_num_rows;
+    int      qoi_num_cols;
+    double*  val_qoi_block;
+    double** val_qoi;
+    int      val_qoi_size;
 
   } ModelData_QoI_ML1_Type;
 
@@ -467,14 +771,13 @@ struct DriverMLMOD {
     string *base_dir;
     string *base_name;
 
-    string *Dyn1_filename;
-    string *Dyn2_filename;
+    string *dyn1_filename;
+    string *dyn2_filename;
 
-    torch::jit::script::Module *Dyn1_model;
-    torch::jit::script::Module *Dyn2_model;
+    torch::jit::Module *Dyn1_model;
+    torch::jit::Module *Dyn2_model;
 
     string *mask_input_str; 
-
     string *mask_fix_str;
 
     // --
@@ -491,8 +794,6 @@ struct DriverMLMOD {
     int  input_size;
 
     int mask_fix;
-
-    int IN_X,IN_V,IN_F,IN_Type;
 
   } ModelData_Dyn_ML1_Type;
 

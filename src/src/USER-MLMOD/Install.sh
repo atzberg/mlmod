@@ -3,7 +3,7 @@
 if (test $1 = 1) then
 
   echo "================================================================================"
-  echo "USER-MLMOD Package: Machine Learning (ML) for Data-Driven Modeling (MOD)        "
+  echo "MLMOD Package: Machine Learning (ML) for Data-Driven Modeling (MOD)        "
   echo "--------------------------------------------------------------------------------"
   #echo " "
 
@@ -20,7 +20,7 @@ if (test $1 = 1) then
   find $PWD -name '*.cpp' -exec cp "{}" ../ >& mlmod_cp_cpp.log \;
 
   echo " "
-  echo "Note USER-MLMOD current version uses serial head node for handling" 
+  echo "Note MLMOD current version uses serial head node for handling" 
   echo "the couplings"
   echo " "
   echo "For more information and examples see "
@@ -40,7 +40,7 @@ fi
 # test is MOLECULE package installed already
 if (test $1 = 1) then
   if (test ! -e ../angle_harmonic.cpp) then
-    echo "Must install MOLECULE package with USER-MLMOD, for example by command 'make yes-molecule'."
+    echo "Must install MOLECULE package with MLMOD, for example by command 'make yes-molecule'."
     exit 1
   fi
 
