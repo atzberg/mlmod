@@ -1,0 +1,29 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Atzberger
+  given-names: Paul J.
+  orcid: "https://orcid.org/0000-0001-6806-8069"
+doi: 10.5281/zenodo.8327516
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Atzberger
+    given-names: Paul J.
+    orcid: "https://orcid.org/0000-0001-6806-8069"
+  date-published: 2023-09-14
+  doi: 10.21105/joss.05620
+  issn: 2475-9066
+  issue: 89
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 5620
+  title: "MLMOD: Machine Learning Methods for Data-Driven Modeling in
+    LAMMPS"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.05620"
+  volume: 8
+title: "MLMOD: Machine Learning Methods for Data-Driven Modeling in
+  LAMMPS"
+
