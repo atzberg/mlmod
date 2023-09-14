@@ -3,7 +3,7 @@
 import subprocess;
 
 # version and URL
-vstr='1.0.1';
+vstr='1.0.2';
 server='http://web.math.ucsb.edu/~atzberg/mlmod/distr'
 
 # distributions to try
