@@ -4,7 +4,7 @@
 
 [Documentation](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
 [Examples](./examples) |
-[Paper](https://github.com/atzberg/mlmod/blob/main/paper/paper.pdf)
+[Paper](./paper/paper.pdf)
                                                                                                 
 ### MLMOD: Machine Learning Methods for Data-Driven Modeling in LAMMPS
 Now available with Jupyter notebooks and Python scripts for readily setting up
