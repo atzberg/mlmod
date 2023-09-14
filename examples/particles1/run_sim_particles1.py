@@ -28,6 +28,7 @@ def copytree2(src, dst, symlinks=False, ignore=None):
       shutil.copytree(s, d, symlinks, ignore);
     else:
       shutil.copy2(s, d);
+
 def write_mlmod_params(filename,params):
   model_type = params['model_type'];
   model_data = params['model_data'];

@@ -53,8 +53,8 @@ class M_ij_Model(torch.nn.Module):
     #epsilon = 6.0/8.0; eta = 1.0;  # can adjust below for coupling strength    
     a = self.a; epsilon = self.epsilon; eta = self.eta; eps1 = self.eps1;
     
-    vec_r_ij = x[0,0:num_dim] - x[0,num_dim:2*num_dim]; # avoiding tensorizing batch, just one pair assumed
-    r_ij_sq = torch.sum(torch.pow(vec_r_ij,2),0);
+    vec_r_ij = x[0:num_dim,0] - x[num_dim:2*num_dim,0]; # avoiding tensorizing batch, just one pair assumed
+    r_ij_sq = torch.sum(torch.pow(vec_r_ij,2));
     r_ij = torch.sqrt(r_ij_sq);
     r_ij_p = r_ij + eps1;
     r_ij_p_sq = r_ij_sq + 2*r_ij_p*eps1 + eps1*eps1; 
@@ -67,7 +67,7 @@ class M_ij_Model(torch.nn.Module):
     M_ij = M_ij + c2*(torch.eye(num_dim) - (torch.outer(vec_r_ij,vec_r_ij)/r_ij_p_sq));
     M_ij = c0*M_ij;
 
-    z = M_ij.flatten().unsqueeze(0);
+    z = M_ij.flatten().unsqueeze(1);
 
     #pdb.set_trace();
     return z;
@@ -85,7 +85,7 @@ class M_ii_Model(torch.nn.Module):
     a = self.a; eta = self.eta;
     M_ii = torch.eye(num_dim)*(1.0/(6.0*torch.pi*eta*a));
                         
-    z = M_ii.flatten().unsqueeze(0);
+    z = M_ii.flatten().unsqueeze(1);
     
     #pdb.set_trace();
     return z;    
@@ -93,6 +93,8 @@ class M_ii_Model(torch.nn.Module):
 # Initialize model
 M_ii_model = M_ii_Model();
 M_ij_model = M_ij_Model();
+
+num_dim = 3;
 
 a = 4.1; eta = 1.2; epsilon = (6.0/8.0)*a; eps1 = 1e-11; 
 M_ii_model.a = a; M_ii_model.eta = eta;
@@ -132,7 +134,7 @@ f.close();
 
 #--
 model = M_ii_model;
-x = torch.zeros((1,3));
+x = torch.zeros((num_dim,1));
 traced_M_ii_model = torch.jit.trace(model, (x))
 
 torch_filename = '%s/M_ii_rpy1.pt'%base_dir;
@@ -142,7 +144,7 @@ print(traced_M_ii_model.code) # prints trace model code
 
 #--
 model = M_ij_model;
-x = torch.zeros((1,6));
+x = torch.zeros((2*num_dim,1));
 traced_M_ij_model = torch.jit.trace(model, (x))
 
 torch_filename = '%s/M_ij_rpy1.pt'%base_dir;
@@ -155,26 +157,26 @@ print("cmd = " + cmd);
 os.system(cmd);
 
 # #### Show model outputs
-x = torch.zeros((1,6));
+x = torch.zeros((2*num_dim,1));
 x[0,0] = -5.0;
-x[0,3] = 5.0;
+x[3,0] = 5.0;
 
 print("M_ii_model");
-xx = torch.zeros((1,3));
-xx[:] = x[0,0:3];
+xx = torch.zeros((num_dim,1));
+xx[:,0] = x[0:3,0];
 y = M_ii_model(xx);
-yy = y[0,:].reshape((3,3));
+yy = y[:,0].reshape((3,3));
 M_ii = yy;
 print("x = " + str(x));
 print("y = " + str(y));
 print("M_ii = " + str(M_ii));
 
 print("M_ij_model");
-xx = torch.zeros((1,6));
-xx[0,0:3] = x[0,0:3];
-xx[0,3:6] = x[0,3:6];
+xx = torch.zeros((2*num_dim,1));
+xx[0:3,0] = x[0:3,0];
+xx[3:6,0] = x[3:6,0];
 y = M_ij_model(xx)
-yy = y[0,:].reshape((3,3));
+yy = y[:,0].reshape((3,3));
 M_ij = yy;
 print("x = " + str(x));
 print("y = " + str(y));
