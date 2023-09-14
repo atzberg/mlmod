@@ -9,7 +9,7 @@ authors:
     orcid: 0000-0001-6806-8069
     affiliation: 1
 affiliations:
- - name: Paul J. Atzberger, Professor, University California Santa Barbara
+ - name: Paul J. Atzberger, Professor, University of California Santa Barbara
    index: 1
 date: 4 May 2023
 bibliography: paper.bib
@@ -34,8 +34,8 @@ including Neural Networks, Gaussian Process Regression, Kernel Models, and
 other approaches.  Here we discuss our prototype C++/Python package, aims, and
 example usage.  The package is integrated currently with the mesocale and
 molecular dynamics simulation package LAMMPS and PyTorch.  The source code for
-this initial version 1.0.0 of ``MLMOD`` has been archived to Zenodo with a DOI
-in [@zenodo].  For related papers, examples, updates, and additional
+this initial version 1.0 of ``MLMOD`` has been archived to Zenodo [@zenodo].
+For related papers, examples, updates, and additional
 information see <https://github.com/atzberg/mlmod> and 
 <http://atzberger.org/>.
 

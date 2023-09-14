@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<!--
+=======================================================
+  Data file for MLMOD package.
+
+  These files provide data and scripting control 
+  of the MLMOD package.
+
+=======================================================
+-->
+<MLMOD>
+
+<model_data type="F_ML1">
+  <base_name value="force1"/>
+  <base_dir value="./force1">
+  <mask_fix value="mask_fix"/>
+  <mask_fix value="mask_input"/>
+  <F_filename value="force_ml1.pt"/>
+</model_data>
+
+</MLMOD>
+

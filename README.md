@@ -3,8 +3,8 @@
 </p>
 
 [Documentation](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
-[Examples](https://github.com/atzberg/mlmod/tree/master/examples) |
-[Paper](https://arxiv.org/abs/2107.14362)
+[Examples](./examples) |
+[Paper](https://joss.theoj.org/papers/cad4ad083ae0cef287faca542db5229d)
                                                                                                 
 ### MLMOD: Machine Learning Methods for Data-Driven Modeling in LAMMPS
 Now available with Jupyter notebooks and Python scripts for readily setting up
@@ -33,9 +33,9 @@ __To install directly__ the pre-compiled packages for Python, download one of th
 following
 
 - Linux Debian 9+/Ubuntu:
-  [mlmod_lammps-0.8.0-py3-none-manylinux_2_24_x86_64.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-0.8.0-py3-none-manylinux_2_24_x86_64.whl)
+  [mlmod_lammps-1.0.1-py3-none-manylinux_2_24_x86_64.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.1-py3-none-manylinux_2_24_x86_64.whl)
 - Linux Debian 9+/Ubuntu (flexible install):
-  [mlmod_lammps-0.8.0-py3-none-any.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-0.8.0-py3-none-any.whl)
+  [mlmod_lammps-1.0.1-py3-none-any.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.1-py3-none-any.whl)
 
 Install using 
 
@@ -47,7 +47,7 @@ To test the package installed run
 
 __For example models and simulations__, see the notebooks and scripts in the
 [examples
-folder](https://github.com/atzberg/mlmod/tree/master/examples).  
+folder](/examples).  
 
 __Documentation pages__ can be found
 [here](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html).
@@ -82,17 +82,21 @@ pages](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html).
 Please cite the paper below for this package:
 
 **MLMOD Package: Machine Learning Methods for Data-Driven Modeling in
-LAMMPS"**, P.J. Atzberger, arXiv.2107.14362, 2021 [[paper
-link]](https://arxiv.org/abs/2107.14362).
+LAMMPS"**, P.J. Atzberger, Journal of Open Source Software, 8(89), 5620, (2023) [[paper
+link]](https://doi.org/10.21105/joss.05620).
 ```
 @article{mlmod_atzberger,
-  author  = {Atzberger, P. J.},
-  journal = {arxiv},
-  title   = {MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
-  year    = {2021},
-  note    = {http://atzberger.org},
-  doi     = {10.48550/arXiv.2107.14362},
-  url     = {https://arxiv.org/abs/2107.14362},
+  author    = {Paul J. Atzberger},
+  journal   = {Journal of Open Source Software}, 
+  title     = {MLMOD: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
+  year      = {2023},  
+  publisher = {The Open Journal},
+  volume    = {8},
+  number    = {89},
+  pages     = {5620},
+  note      = {http://atzberger.org},
+  doi       = {10.21105/joss.05620},
+  url       = {https://doi.org/10.21105/joss.05620}
 }
 ```
 ----
@@ -133,7 +137,7 @@ http://atzberger.org/
 
 ----
 [Documentation](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
-[Examples](https://github.com/atzberg/mlmod/tree/master/examples) |
+[Examples](./examples) |
 [Atzberger Homepage](http://atzberger.org/)
 
 
