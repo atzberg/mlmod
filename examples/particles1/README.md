@@ -3,7 +3,7 @@
 </p>
 
 Simulation of particles that have mobility tensor coupling that is based on
-pytorch models for $M(X)$.
+pytorch models for M(X).
 
 To run the simulation for the python mlmod package, use 
 

@@ -13,7 +13,7 @@
 # These models can be replaced readily by data-driven / learned models or 
 # any other PyTorch model that can be traced and output to .pt torch-format.
 #
-import os, pickle,ipdb;
+import os, pickle;
 script_base_name = "gen_mlmod_dynamics1";
 script_dir = os.getcwd();
 

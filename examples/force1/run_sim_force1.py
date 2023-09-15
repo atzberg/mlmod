@@ -1,7 +1,7 @@
 #!/usr/bin/env 
 ### Particle simulation with mlmod-based mobility.
 
-import os,sys, shutil, pickle, ipdb;
+import os,sys, shutil, pickle;
 import numpy as np;
 
 script_base_name = "run_sim_force1"; script_dir = os.getcwd();
@@ -123,10 +123,6 @@ def write_mlmod_params(filename,params):
     write_mlmod_dX_MF_ML1_params(filename,params);
   elif params['model_type'] == 'F_ML1': 
     write_mlmod_F_ML1_params(filename,params);
-  elif params['model_type'] == 'F_X_ML1': 
-    write_mlmod_F_X_ML1_params(filename,params);
-  elif params['model_type'] == 'F_Pair_ML1': 
-    write_mlmod_F_Pair_ML1_params(filename,params);
   elif params['model_type'] == 'Dyn_ML1': 
     write_mlmod_Dyn_ML1_params(filename,params);
   elif params['model_type'] == 'QoI_ML1': 
@@ -271,12 +267,8 @@ Lc("atom_modify sort 0 ${neighborSkinDist}");           # setup sort data explic
 
 # -- 
 flag_force=True;
-force_type='F_ML1';
-#force_type='F_X_ML1';
-#force_type='F_Pair_ML1';
-print("force_type = " + force_type);
 if flag_force: 
-  mlmod_params = {'model_type':force_type,
+  mlmod_params = {'model_type':'F_ML1',
 		  'model_data':{
 		    'base_name':force_case,
 		    'base_dir':'./F_ML1_' + force_case,
@@ -285,10 +277,10 @@ if flag_force:
 		    'F_filename':'F_' + force_case + '.pt',
 		    }
 		 };
-  filename_mlmod_params = force_type + '_' + force_case + '.mlmod_params';
+  filename_mlmod_params = 'F_ML1_' + force_case + '.mlmod_params';
   write_mlmod_params(filename_mlmod_params,mlmod_params);
   #Lc("fix F_ML1_" + force_case " all mlmod " + filename_mlmod_params);
-  Lc("fix %s_1 all mlmod "%force_type + filename_mlmod_params);
+  Lc("fix F_ML1_1 all mlmod " + filename_mlmod_params);
 
 # --
 flag_mobility=False;

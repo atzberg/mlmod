@@ -1,7 +1,7 @@
 #!/usr/bin/env 
-### Particle simulation with quantity of interest from specified ML model.
+### Particle simulation with mlmod-based mobility.
 
-import os,sys, shutil, pickle, ipdb;
+import os,sys, shutil, pickle;
 import numpy as np;
 
 script_base_name = "run_sim_qoi1"; script_dir = os.getcwd();
@@ -340,8 +340,13 @@ if flag_set_force:
 #fix 2 all nve
 
 Lc("dump dvtk_mlmod1 all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp fx fy fz id type vx vy vz");
+#Lc("dump dvtk_mlmod1 all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp id type vx vy vz");
+#Lc("dump dvtk_mlmod2 all vtk ${dumpfreq} ./vtk/Particles_mlmod_f_*.vtp id type fx fy fz");
+#Lc("dump dvtk_mlmod3 all vtk ${dumpfreq} ./vtk/Particles_mlmod_i_*.vtp id type");
 Lc("dump_modify dvtk_mlmod1 pad 8"); # ensures filenames file_000000.data
 Lc("dump_modify dvtk_mlmod1 sort id");
+#Lc("dump_modify dvtk_mlmod2 sort id");
+#Lc("dump_modify dvtk_mlmod3 sort id");
 
 Lc("run 10")
 
@@ -358,6 +363,7 @@ for i in range(0,num_atoms*num_dim):
       pp += ", ";
     else:
       pp += "]\"";
+    #Lc("variable q equal f_%s[%d][1]"%(qoi1_fix_id,ii));  # f_fixID, f_fixID[i], f_fixID[i][j]
 
 Lc(pp);
 
