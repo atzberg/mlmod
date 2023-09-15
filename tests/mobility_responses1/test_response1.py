@@ -66,8 +66,9 @@ def compute_M_ii_oseen1(x,params):
 def compute_M_ij_oseen1(x,params):
   dd = params;
   epsilon = dd['epsilon']; eta = dd['eta']; eps1 = dd['eps1']; num_dim = 3; 
+
   vec_r_ij = x[0,0:num_dim] - x[1,0:num_dim]; # avoiding tensorizing batch, just one pair assumed
-  r_ij_sq = np.sum(np.power(vec_r_ij,2),0);
+  r_ij_sq = np.sum(np.power(vec_r_ij,2));
   r_ij = np.sqrt(r_ij_sq);
 
   prefactor = 1.0/(8.0*np.pi*eta*(r_ij + epsilon));
@@ -88,21 +89,19 @@ def compute_M_ij_rpy1(x,params):
   
   dd = params;
   a = dd['a']; epsilon = dd['epsilon']; eta = dd['eta']; eps1 = dd['eps1']; num_dim = 3; 
-  
+    
   vec_r_ij = x[0,0:num_dim] - x[1,0:num_dim]; # avoiding tensorizing batch, just one pair assumed
-  r_ij_sq = np.sum(np.power(vec_r_ij,2),0);
+  r_ij_sq = np.sum(np.power(vec_r_ij,2));
   r_ij = np.sqrt(r_ij_sq);
   r_ij_p = r_ij + eps1;
   r_ij_p_sq = r_ij_sq + 2*r_ij_p*eps1 + eps1*eps1; 
   r_ij_p_cub = r_ij_p_sq*r_ij_p;
 
-  vec_r_ij_unit = vec_r_ij/r_ij_p;
-
   c0 = 1.0/(6.0*np.pi*eta*a);
   c1 = 3.0*a/(4.0*r_ij_p);
-  M_ij = c1*(np.eye(num_dim) + (np.outer(vec_r_ij_unit,vec_r_ij_unit)));
+  M_ij = c1*(np.eye(num_dim) + (np.outer(vec_r_ij,vec_r_ij)/r_ij_p_sq));
   c2 = a*a*a/(2.0*r_ij_p_cub)
-  M_ij = M_ij + c2*(np.eye(num_dim) - 3.0*np.outer(vec_r_ij_unit,vec_r_ij_unit));
+  M_ij = M_ij + c2*(np.eye(num_dim) - (np.outer(vec_r_ij,vec_r_ij)/r_ij_p_sq));
   M_ij = c0*M_ij;
 
   return M_ij; 
@@ -130,14 +129,15 @@ def compute_M_ii(x,params):
   return M_ii;
 
 
-def compute_full_response(model_case):
+def compute_full_response(model_case,v_I):
   print("model_case = " + model_case);
 
   # @base_dir
   base_dir_output   = '%s/output/%s'%(script_dir,script_base_name);
   create_dir(base_dir_output);
 
-  dir_run_name = 'batch_00';
+  batch_id = 0;
+  dir_run_name = model_case + '_' + '%.2d'%v_I + '_' + 'batch_%.2d'%batch_id;
   base_dir = '%s/%s_test001'%(base_dir_output,dir_run_name);
 
   # remove all data from dir
@@ -352,7 +352,7 @@ def test_full_response(response_params,threshold_result):
   v_I = response_params['v_I'];
 
   # compute the results
-  results = compute_full_response(model_case);
+  results = compute_full_response(model_case,v_I);
  
   # test if the response is correct
   atom_vv = results['atom_vv'];
@@ -396,7 +396,7 @@ def test_full_response(response_params,threshold_result):
     msg_fail = "Threshold failed.\n"
     msg_fail += "model_case = %s \n"%model_case;
     msg_fail += "v_I = %d \n"%v_I;
-    msg_fail += "err_v2 = %.4e"%err_v1;
+    msg_fail += "err_v2 = %.4e"%err_v2;
     
     assert err_v2 < threshold, msg_fail;
 
