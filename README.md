@@ -33,9 +33,9 @@ __To install directly__ the pre-compiled packages for Python, download one of th
 following
 
 - Linux Debian 9+/Ubuntu:
-  [mlmod_lammps-1.0.2-py3-none-manylinux_2_24_x86_64.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.2-py3-none-manylinux_2_24_x86_64.whl)
+  [mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl)
 - Linux Debian 9+/Ubuntu (flexible install):
-  [mlmod_lammps-1.0.2-py3-none-any.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.2-py3-none-any.whl)
+  [mlmod_lammps-1.0.3-py3-none-any.whl](http://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-any.whl)
 
 Install using 
 
@@ -138,6 +138,6 @@ http://atzberger.org/
 ----
 [Documentation](http://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
 [Examples](./examples) |
+[Paper](./paper/paper.pdf) |
 [Atzberger Homepage](http://atzberger.org/)
-
 
