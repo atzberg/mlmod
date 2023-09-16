@@ -8,136 +8,9 @@ script_base_name = "run_sim_dynamics1"; script_dir = os.getcwd();
 
 # import the mlmod_lammps module
 from mlmod_lammps.lammps import lammps # use this for the pip install of pre-built package
+import mlmod_lammps.lammps.constants as lconst
+import mlmod_lammps.util as m_util;
 lammps_import_comment = "from mlmod_lammps.lammps import lammps";  
-
-# filesystem management
-def create_dir(dir_name):
-  if not os.path.exists(dir_name):
-    os.makedirs(dir_name);    
-    
-def rm_dir(dir_name):
-  if os.path.exists(dir_name):    
-    shutil.rmtree(dir_name);
-  else: 
-    print("WARNING: rm_dir(): The directory does not exist, dir_name = " + dir_name);    
-
-def copytree2(src, dst, symlinks=False, ignore=None):
-  for ff in os.listdir(src):
-    s = os.path.join(src, ff); d = os.path.join(dst, ff);
-    if os.path.isdir(s):
-      shutil.copytree(s, d, symlinks, ignore);
-    else:
-      shutil.copy2(s, d);
-
-def write_mlmod_F_ML1_params(filename,params):
-  model_type = params['model_type']; model_data = params['model_data'];
-  base_name, base_dir, mask_fix, mask_input, F_filename = tuple(map(model_data.get,\
-                                  ['base_name', 'base_dir', 'mask_fix', 
-                                   'mask_input', 'F_filename']));
-  
-  # xml file
-  f = open(filename,'w');
-  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
-  f.write('<MLMOD>\n');
-  f.write('<model_data type="' + model_type + '">\n');
-  f.write('<base_name value="' + base_name + '"/>\n');
-  f.write('<base_dir value="' + base_dir + '"/>\n');
-  f.write('<mask_fix value="' + mask_fix + '"/>\n');
-  f.write('<mask_input value="' + mask_input + '"/>\n');
-  f.write('<F_filename value="' + F_filename + '"/>\n');
-  f.write('</model_data>\n');
-  f.write('</MLMOD>\n');
-  f.close();
-
-  # pickle file
-  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
-
-def write_mlmod_Dyn_ML1_params(filename,params):
-  model_type = params['model_type']; model_data = params['model_data'];
-  base_name, base_dir, mask_fix, mask_input, dyn1_filename, dyn2_filename = tuple(map(model_data.get,\
-                                  ['base_name', 'base_dir', 'mask_fix', 
-                                   'mask_input', 'dyn1_filename', 'dyn2_filename']));
-  
-  # xml file
-  f = open(filename,'w');
-  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
-  f.write('<MLMOD>\n');
-  f.write('<model_data type="' + model_type + '">\n');
-  f.write('<base_name value="' + base_name + '"/>\n');
-  f.write('<base_dir value="' + base_dir + '"/>\n');
-  f.write('<mask_fix value="' + mask_fix + '"/>\n');
-  f.write('<mask_input value="' + mask_input + '"/>\n');
-  f.write('<dyn1_filename value="' + dyn1_filename + '"/>\n');
-  f.write('<dyn2_filename value="' + dyn2_filename + '"/>\n');
-  f.write('</model_data>\n');
-  f.write('</MLMOD>\n');
-  f.close();
-
-  # pickle file
-  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
-
-def write_mlmod_QoI_ML1_params(filename,params):
-  model_type = params['model_type']; model_data = params['model_data'];
-  base_name, base_dir, mask_fix, mask_input, skip_step, QoI_filename = tuple(map(model_data.get,\
-                                  ['base_name', 'base_dir', 'mask_fix', 
-                                   'mask_input', 'skip_step', 'QoI_filename']));
-  
-  # xml file
-  f = open(filename,'w');
-  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
-  f.write('<MLMOD>\n');
-  f.write('<model_data type="' + model_type + '">\n');
-  f.write('<base_name value="' + base_name + '"/>\n');
-  f.write('<base_dir value="' + base_dir + '"/>\n');
-  f.write('<mask_fix value="' + mask_fix + '"/>\n');
-  f.write('<mask_input value="' + mask_input + '"/>\n');
-  f.write('<skip_step value="' + skip_step + '"/>\n');
-  f.write('<QoI_filename value="' + QoI_filename + '"/>\n');
-  f.write('</model_data>\n');
-  f.write('</MLMOD>\n');
-  f.close();
-
-  # pickle file
-  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
-
-def write_mlmod_dX_MF_ML1_params(filename,params):
-  model_type = params['model_type'];
-  model_data = params['model_data'];
-  
-  # xml file
-  f = open(filename,'w');
-  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
-  f.write('<MLMOD>\n');
-  f.write('<model_data type="' + model_type + '">\n');
-  f.write('  <M_ii_filename value="' + model_data['M_ii_filename'] + '"/>\n');
-  f.write('  <M_ij_filename value="' + model_data['M_ij_filename'] + '"/>\n');
-  f.write('</model_data>\n');
-  f.write('</MLMOD>\n');
-  f.close();
-
-  # pickle file
-  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
-
-def write_mlmod_params(filename,params):
-  if params['model_type'] == 'dX_MF_ML1': 
-    write_mlmod_dX_MF_ML1_params(filename,params);
-  elif params['model_type'] == 'F_ML1': 
-    write_mlmod_F_ML1_params(filename,params);
-  elif params['model_type'] == 'Dyn_ML1': 
-    write_mlmod_Dyn_ML1_params(filename,params);
-  elif params['model_type'] == 'QoI_ML1': 
-    write_mlmod_QoI_ML1_params(filename,params);
-  else:
-    raise Exception("No recongnized model_type = " + str(model_type));
-  
-def find_closest_pt(x0,xx):
-  dist_sq = np.sum(np.power(xx - np.expand_dims(x0,0),2),1);
-  ii0 = np.argmin(dist_sq);
-  return ii0;
-
-def wrap_lammps_Lc(ss):
-  L.command(ss); 
-  print(ss);
 
 #@mobility_case
 mobility_case = 'rpy1';
@@ -153,20 +26,20 @@ force_case = 'force1';
 
 # @base_dir
 base_dir_output   = '%s/output/%s'%(script_dir,script_base_name);
-create_dir(base_dir_output);
+m_util.create_dir(base_dir_output);
 
 dir_run_name = 'batch_00';
 base_dir = '%s/%s_test001'%(base_dir_output,dir_run_name);
 
 # remove all data from dir
-rm_dir(base_dir);
+m_util.rm_dir(base_dir);
 
 # setup the directories
 base_dir_fig    = '%s/fig'%base_dir;
-create_dir(base_dir_fig);
+m_util.create_dir(base_dir_fig);
 
 base_dir_vtk    = '%s/vtk'%base_dir;
-create_dir(base_dir_vtk);
+m_util.create_dir(base_dir_vtk);
 
 ## print the import comment
 print(lammps_import_comment);
@@ -175,15 +48,14 @@ print(lammps_import_comment);
 template_mlmod_model = 'mlmod_model1';
 src = script_dir + '/' + template_mlmod_model;
 dst = base_dir + '/';
-copytree2(src,dst,symlinks=False,ignore=None);
+m_util.copytree2(src,dst,symlinks=False,ignore=None);
 #
 ## change directory for running LAMMPS in output
 print("For running LAMMPS changing the current working directory to:\n%s"%base_dir);
 os.chdir(base_dir); # base the current working directory
 
 # #### Setup LAMMPs
-L = lammps();
-Lc = lambda ss: wrap_lammps_Lc(ss);  # lammps commands 
+L = lammps(); Lc = m_util.wrap_L(L,m_util.Lc_print);
 
 Lc("log log.lammps");
 Lc("variable dumpfreq equal 1");
@@ -282,7 +154,7 @@ if flag_force:
 		    }
 		 };
   filename_mlmod_params = 'F_ML1_' + force_case + '.mlmod_params';
-  write_mlmod_params(filename_mlmod_params,mlmod_params);
+  m_util.write_mlmod_params(filename_mlmod_params,mlmod_params);
   #Lc("fix F_ML1_" + force_case " all mlmod " + filename_mlmod_params);
   Lc("fix F_ML1_1 all mlmod " + filename_mlmod_params);
 
@@ -296,7 +168,7 @@ if flag_mobility:
 		    }
 		 };
   filename_mlmod_params = 'main.mlmod_params';
-  write_mlmod_params(filename_mlmod_params,mlmod_params);
+  m_util.write_mlmod_params(filename_mlmod_params,mlmod_params);
   Lc("fix dX_MF_ML1_1 all mlmod " + filename_mlmod_params);
 
 # --
@@ -313,7 +185,7 @@ if flag_dynamics:
 		    }
 		 };
   filename_mlmod_params = 'main.mlmod_params';
-  write_mlmod_params(filename_mlmod_params,mlmod_params);
+  m_util.write_mlmod_params(filename_mlmod_params,mlmod_params);
   Lc("fix Dyn_ML1_1 all mlmod " + filename_mlmod_params);
 
 timestep = 0.35;
@@ -339,13 +211,8 @@ if flag_set_force:
 #fix 2 all nve
 
 Lc("dump dvtk_mlmod1 all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp fx fy fz id type vx vy vz");
-#Lc("dump dvtk_mlmod1 all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp id type vx vy vz");
-#Lc("dump dvtk_mlmod2 all vtk ${dumpfreq} ./vtk/Particles_mlmod_f_*.vtp id type fx fy fz");
-#Lc("dump dvtk_mlmod3 all vtk ${dumpfreq} ./vtk/Particles_mlmod_i_*.vtp id type");
 Lc("dump_modify dvtk_mlmod1 pad 8"); # ensures filenames file_000000.data
 Lc("dump_modify dvtk_mlmod1 sort id");
-#Lc("dump_modify dvtk_mlmod2 sort id");
-#Lc("dump_modify dvtk_mlmod3 sort id");
 
 Lc("run 100")
 

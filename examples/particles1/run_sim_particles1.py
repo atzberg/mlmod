@@ -7,56 +7,10 @@ import numpy as np;
 script_base_name = "run_sim_particles1"; script_dir = os.getcwd();
 
 # import the mlmod_lammps module
-from mlmod_lammps.lammps import lammps # use this for the pip install of pre-built package
+from mlmod_lammps.lammps import lammps; 
+import mlmod_lammps.lammps.constants as lconst
+import mlmod_lammps.util as m_util;
 lammps_import_comment = "from mlmod_lammps.lammps import lammps";  
-
-# filesystem management
-def create_dir(dir_name):
-  if not os.path.exists(dir_name):
-    os.makedirs(dir_name);    
-    
-def rm_dir(dir_name):
-  if os.path.exists(dir_name):    
-    shutil.rmtree(dir_name);
-  else: 
-    print("WARNING: rm_dir(): The directory does not exist, dir_name = " + dir_name);    
-
-def copytree2(src, dst, symlinks=False, ignore=None):
-  for ff in os.listdir(src):
-    s = os.path.join(src, ff); d = os.path.join(dst, ff);
-    if os.path.isdir(s):
-      shutil.copytree(s, d, symlinks, ignore);
-    else:
-      shutil.copy2(s, d);
-
-def write_mlmod_params(filename,params):
-  model_type = params['model_type'];
-  model_data = params['model_data'];
-  
-  # xml file
-  f = open(filename,'w');
-  f.write('<?xml version="1.0" encoding="UTF-8"?>\n');
-  f.write('<MLMOD>\n');
-  f.write('\n');
-  f.write('<model_data type="' + model_type + '">\n');
-  f.write('  <M_ii_filename value="' + model_data['M_ii_filename'] + '"/>\n');
-  f.write('  <M_ij_filename value="' + model_data['M_ij_filename'] + '"/>\n');
-  f.write('</model_data>\n');
-  f.write('\n');
-  f.write('</MLMOD>\n');
-  f.close();
-
-  # pickle file
-  f = open(filename + '.pickle','wb'); pickle.dump(params,f); f.close();
-
-def find_closest_pt(x0,xx):
-  dist_sq = np.sum(np.power(xx - np.expand_dims(x0,0),2),1);
-  ii0 = np.argmin(dist_sq);
-  return ii0;
-
-def wrap_lammps_Lc(ss):
-  L.command(ss); 
-  print(ss);
 
 #@model_case
 model_case = 'rpy1';
@@ -64,20 +18,20 @@ model_case = 'rpy1';
 
 # @base_dir
 base_dir_output   = '%s/output/%s'%(script_dir,script_base_name);
-create_dir(base_dir_output);
+m_util.create_dir(base_dir_output);
 
 dir_run_name = 'batch_00';
 base_dir = '%s/%s_test001'%(base_dir_output,dir_run_name);
 
 # remove all data from dir
-rm_dir(base_dir);
+m_util.rm_dir(base_dir);
 
 # setup the directories
 base_dir_fig    = '%s/fig'%base_dir;
-create_dir(base_dir_fig);
+m_util.create_dir(base_dir_fig);
 
 base_dir_vtk    = '%s/vtk'%base_dir;
-create_dir(base_dir_vtk);
+m_util.create_dir(base_dir_vtk);
 
 ## print the import comment
 print(lammps_import_comment);
@@ -86,15 +40,14 @@ print(lammps_import_comment);
 template_mlmod_model = 'mlmod_model1';
 src = script_dir + '/' + template_mlmod_model;
 dst = base_dir + '/';
-copytree2(src,dst,symlinks=False,ignore=None);
+m_util.copytree2(src,dst,symlinks=False,ignore=None);
 #
 ## change directory for running LAMMPS in output
 print("For running LAMMPS changing the current working directory to:\n%s"%base_dir);
 os.chdir(base_dir); # base the current working directory
 
 # #### Setup LAMMPs
-L = lammps();
-Lc = lambda ss: wrap_lammps_Lc(ss);  # lammps commands 
+L = lammps(); Lc = m_util.wrap_L(L,m_util.Lc_print);
 
 Lc("log log.lammps");
 Lc("variable dumpfreq equal 1");
@@ -109,8 +62,6 @@ Lc("bond_style none");
 Lc("angle_style none");
 
 # bounding box set up
-#Lc("region mybox block -18 18 -18 18 -18 18");
-#Lc("region mybox prism -18 18 -9 9 -18 18 0 0 0");
 LL = 36; dims=(-LL/2.0,LL/2.0,-LL/2.0,LL/2.0,-LL/2.0,LL/2.0);
 Lc("region mybox prism %.2e %.2e %.2e %.2e %.2e %.2e 0 0 0"%dims); 
 Lc("boundary p p p");
@@ -182,20 +133,20 @@ mlmod_params = {'model_type':'dX_MF_ML1',
                   }
                };
 filename_mlmod_params = 'main.mlmod_params';
-write_mlmod_params(filename_mlmod_params,mlmod_params);
+m_util.write_mlmod_params(filename_mlmod_params,mlmod_params);
 Lc("fix ml_1 all mlmod " + filename_mlmod_params);
 timestep = 0.35;
 Lc("timestep %f"%timestep);
 
 x0 = np.array([-LL/4.0,0,0]);
-ii0 = find_closest_pt(x0,xx); id1=ii0+1; #lammps ids base 1
+ii0 = m_util.find_closest_pt(x0,xx); id1=ii0+1; #lammps ids base 1
 Lc("group cforce1 id %d"%id1); # create group using id's
 force_f1 = np.array([10.0,0.0,0.0]);
 Lc("fix force_f1 cforce1 addforce \
 %.4e %.4e %.4e"%(force_f1[0],force_f1[1],force_f1[2])); # add force to the cforce group
 
 x0 = np.array([LL/4.0,0,0]);
-ii0 = find_closest_pt(x0,xx); id2=ii0+1; #lammps ids base 1
+ii0 = m_util.find_closest_pt(x0,xx); id2=ii0+1; #lammps ids base 1
 Lc("group cforce2 id %d"%id2); # create group using id's
 force_f2 = -1.0*force_f1;
 Lc("fix force_f2 cforce2 addforce \
@@ -205,15 +156,10 @@ Lc("fix force_f2 cforce2 addforce \
 #fix 2 all nve
 
 Lc("dump dvtk_mlmod1 all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp fx fy fz id type vx vy vz");
-#Lc("dump dvtk_mlmod1 all vtk ${dumpfreq} ./vtk/Particles_mlmod_*.vtp id type vx vy vz");
-#Lc("dump dvtk_mlmod2 all vtk ${dumpfreq} ./vtk/Particles_mlmod_f_*.vtp id type fx fy fz");
-#Lc("dump dvtk_mlmod3 all vtk ${dumpfreq} ./vtk/Particles_mlmod_i_*.vtp id type");
 Lc("dump_modify dvtk_mlmod1 pad 8"); # ensures filenames file_000000.data
 Lc("dump_modify dvtk_mlmod1 sort id");
-#Lc("dump_modify dvtk_mlmod2 sort id");
-#Lc("dump_modify dvtk_mlmod3 sort id");
 
-Lc("run 300")
+Lc("run 300");
 
 # gives direct access to memory to lammps
 atom_x = L.numpy.extract_atom("x");  
@@ -228,7 +174,6 @@ print("atom_id = " + str(atom_id));
 print("atom_x = " + str(atom_x));
 print("atom_v = " + str(atom_v));
 print("atom_f = " + str(atom_f));
-
 
 # #### Perform the simulation
 print("Done");

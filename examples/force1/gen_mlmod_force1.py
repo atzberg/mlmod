@@ -20,9 +20,7 @@ script_dir = os.getcwd();
 import torch
 import shutil, pickle;
 import numpy as np;
-import matplotlib;
-import matplotlib.pyplot as plt;
-import sys,shutil,pickle,pdb;
+import sys,shutil,pickle;
 
 import logging;
 
