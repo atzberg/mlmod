@@ -14,20 +14,25 @@
   http://atzberger.org/
   
   Please cite the follow paper when referencing this package
-  
+
   "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
-  Atzberger, P. J., arXiv, 2021.
-  
+  P.J. Atzberger, Journal of Open Source Software, 8(89), 5620, (2023) 
+
   @article{mlmod_atzberger,
-    author  = {Atzberger, P. J.},
-    journal = {arxiv},
-    title   = {MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
-    year    = {2021},
-    note    = {http://atzberger.org},
-    doi     = {10.48550/arXiv.2107.14362},
-    url     = {https://arxiv.org/abs/2107.14362},
+    author    = {Paul J. Atzberger},
+    journal   = {Journal of Open Source Software}, 
+    title     = {MLMOD: Machine Learning Methods for Data-Driven 
+                 Modeling in LAMMPS},
+    year      = {2023},  
+    publisher = {The Open Journal},
+    volume    = {8},
+    number    = {89},
+    pages     = {5620},
+    note      = {http://atzberger.org},
+    doi       = {10.21105/joss.05620},
+    url       = {https://doi.org/10.21105/joss.05620}
   }
-    
+
   For latest releases, examples, and additional information see 
   http://atzberger.org/
  
@@ -35,7 +40,7 @@
 */
 
 /* MLMOD_includes */
-#include "wrapper/wrapper_mlmod.h"
+#include "include/mlmod.h"
 #include "driver_mlmod.h"
 
 #include "fix_mlmod.h"
@@ -57,41 +62,48 @@ using namespace FixConst;
 using namespace std;
 
 /* ------------------------------------------------------------------------- */
-WrapperMLMOD::WrapperMLMOD() { driver_mlmod = new DriverMLMOD(); }
+MLMOD::MLMOD() { driver_mlmod = new DriverMLMOD(); }
 
 /* ------------------------------------------------------------------------- */
-WrapperMLMOD::WrapperMLMOD(LAMMPS_NS::FixMLMOD *fixMLMOD, LAMMPS *lmp, int narg, char **arg) { driver_mlmod = new DriverMLMOD(fixMLMOD,lmp,narg,arg); }
+MLMOD::MLMOD(LAMMPS_NS::FixMLMOD *fixMLMOD, LAMMPS *lmp, int narg, char **arg) { driver_mlmod = new DriverMLMOD(fixMLMOD,lmp,narg,arg); }
 
 /* ------------------------------------------------------------------------- */
-WrapperMLMOD::~WrapperMLMOD() { delete driver_mlmod; }
+MLMOD::~MLMOD() { delete driver_mlmod; }
 
-void WrapperMLMOD::setup(int vflag) { driver_mlmod->setup(vflag); }
-
-/* ---------------------------------------------------------------------- */
-int WrapperMLMOD::setmask(){ return driver_mlmod->setmask(); }
+/* ------------------------------------------------------------------------- */
+void MLMOD::setup(int vflag) { driver_mlmod->setup(vflag); }
 
 /* ---------------------------------------------------------------------- */
-void WrapperMLMOD::pre_exchange() { driver_mlmod->pre_exchange(); }
+int MLMOD::setmask(){ return driver_mlmod->setmask(); }
 
 /* ---------------------------------------------------------------------- */
-void WrapperMLMOD::end_of_step() { driver_mlmod->end_of_step(); }
+void MLMOD::pre_exchange() { driver_mlmod->pre_exchange(); }
 
 /* ---------------------------------------------------------------------- */
-void WrapperMLMOD::init() { driver_mlmod->init_from_fix(); } // @@@ double-check
-
-void WrapperMLMOD::initial_integrate(int vflag) { driver_mlmod->initial_integrate(vflag); }
+void MLMOD::end_of_step() { driver_mlmod->end_of_step(); }
 
 /* ---------------------------------------------------------------------- */
-void WrapperMLMOD::final_integrate() { driver_mlmod->final_integrate(); }
+void MLMOD::init() { driver_mlmod->init_from_fix(); } // @@@ double-check
+
+/* ------------------------------------------------------------------------- */
+void MLMOD::initial_integrate(int vflag) { driver_mlmod->initial_integrate(vflag); }
 
 /* ---------------------------------------------------------------------- */
-void WrapperMLMOD::reset_dt() { driver_mlmod->reset_dt(); }
+void MLMOD::final_integrate() { driver_mlmod->final_integrate(); }
 
 /* ---------------------------------------------------------------------- */
-void WrapperMLMOD::post_force(int vflag) { driver_mlmod->post_force(vflag); 
+double MLMOD::compute_array(int i, int j) { return driver_mlmod->compute_array(i,j); }
+
+/* ---------------------------------------------------------------------- */
+void MLMOD::reset_dt() { driver_mlmod->reset_dt(); }
+
+/* ---------------------------------------------------------------------- */
+void MLMOD::post_force(int vflag) { driver_mlmod->post_force(vflag); 
 }
-/* ---------------------------------------------------------------------- */
-void WrapperMLMOD::init_from_fix() { driver_mlmod->init_from_fix(); }
 
+/* ---------------------------------------------------------------------- */
+void MLMOD::init_from_fix() { driver_mlmod->init_from_fix(); }
+
+/* ---------------------------------------------------------------------- */
 
 

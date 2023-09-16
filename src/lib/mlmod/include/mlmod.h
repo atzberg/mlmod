@@ -13,18 +13,23 @@
   http://atzberger.org/
   
   Please cite the follow paper when referencing this package
-  
+ 
   "MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
-  Atzberger, P. J., arXiv:2107.14362, 2021.
+  P.J. Atzberger, Journal of Open Source Software, 8(89), 5620, (2023) 
 
   @article{mlmod_atzberger,
-    author  = {Atzberger, P. J.},
-    journal = {arxiv},
-    title   = {MLMOD Package: Machine Learning Methods for Data-Driven Modeling in LAMMPS},
-    year    = {2021},
-    note    = {http://atzberger.org},
-    doi     = {10.48550/arXiv.2107.14362},
-    url     = {https://arxiv.org/abs/2107.14362},
+    author    = {Paul J. Atzberger},
+    journal   = {Journal of Open Source Software}, 
+    title     = {MLMOD: Machine Learning Methods for Data-Driven 
+                 Modeling in LAMMPS},
+    year      = {2023},  
+    publisher = {The Open Journal},
+    volume    = {8},
+    number    = {89},
+    pages     = {5620},
+    note      = {http://atzberger.org},
+    doi       = {10.21105/joss.05620},
+    url       = {https://doi.org/10.21105/joss.05620}
   }
     
   For latest releases, examples, and additional information see 
@@ -33,8 +38,8 @@
 --------------------------------------------------------------------------------
 */
 
-#ifndef LMP_WRAPPER_MLMOD_H
-#define LMP_WRAPPER_MLMOD_H
+#ifndef LMP_MLMOD_H
+#define LMP_MLMOD_H
 
 //#include "mpi.h"
 #include <cstdlib>
@@ -62,7 +67,7 @@ class FixMLMOD;
 class LAMMPS;
 
 /** @brief Prototype for the interface wrapping the mlmod package. **/
-struct WrapperMLMOD {
+struct MLMOD {
 
  public:
     
@@ -73,12 +78,12 @@ struct WrapperMLMOD {
       @param narg: number of command arguments
       @param args: list of strings for the arguments 
   **/
-  WrapperMLMOD(class FixMLMOD *, class LAMMPS *, int narg, char **args);
+  MLMOD(class FixMLMOD *, class LAMMPS *, int narg, char **args);
 
   /** @brief Constructor for empy object which is used primarily for testing.
    **/
-  WrapperMLMOD();
-  ~WrapperMLMOD();
+  MLMOD();
+  ~MLMOD();
 
   int          setmask();
   virtual void init();
@@ -96,6 +101,9 @@ struct WrapperMLMOD {
   /** @brief Called by lammps after forces are calculated. **/
   void         post_force(int vflag);
   
+  /** @brief Called by lammps after forces are calculated. **/
+  double       compute_array(int i, int j);
+
   // additional methods/hooks
   void pre_exchange();
   void end_of_step();
