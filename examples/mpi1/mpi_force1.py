@@ -2,15 +2,11 @@
 
 # preceding line should have path for Python on your machine
 
-# simple.py
-# Purpose: mimic operation of examples/COUPLE/simple/simple.cpp via Python
+# base on mpi simple.py
 
-# Serial syntax: simple.py in.lammps
-#                in.lammps = LAMMPS input script
-
-# Parallel syntax: mpirun -np 4 simple.py in.lammps
-#                  in.lammps = LAMMPS input script
-# also need to uncomment mpi4py sections below
+# Parallel syntax: mpirun -np 4 code.py 
+#
+# uses package: mpi4py 
 
 from __future__ import print_function
 import os,sys,pickle;
@@ -58,7 +54,6 @@ else:
   printw = lambda ss: wrap_print0(ss);
 
 # wait for me == 0 to finish setup before other processes proceed
-#@@@
 
 force_case = 'force1';
 base_dir_output = '%s/output/%s'%(script_dir,script_base_name);
