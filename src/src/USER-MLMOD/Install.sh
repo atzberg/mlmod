@@ -20,9 +20,6 @@ if (test $1 = 1) then
   find $PWD -name '*.cpp' -exec cp "{}" ../ >& mlmod_cp_cpp.log \;
 
   echo " "
-  echo "Note MLMOD current version uses serial head node for handling" 
-  echo "the couplings"
-  echo " "
   echo "For more information and examples see "
   echo "http://atzberger.org"
   echo " "
