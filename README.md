@@ -29,6 +29,8 @@ potentials, many-body interactions, and others.
 __To try automatically__ to install the package for Python, you can use the script
 [quick_install.py](./quick_install.py).
 
+```python ./quick_install.py```
+
 __To install directly__ the pre-compiled packages for Python, download one of the
 following
 
