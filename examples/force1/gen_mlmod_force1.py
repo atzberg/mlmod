@@ -5,13 +5,10 @@
 # Paul J. Atzberger 
 # http://atzberger.org
 #     
-# Generates a hand-crafted model in PyTorch framework to show basic ideas. 
+# Generates model in PyTorch framework to show basic ideas. 
 #
-# This gives a stub for how to use the package and run simulation with 
-# them in LAMMPS
-#
-# These models can be replaced readily by data-driven / learned models or 
-# any other PyTorch model that can be traced and output to .pt torch-format.
+# These models can be replaced readily by almost any PyTorch model that 
+# can be traced and output to .pt torch-format (neural networks, gpr, etc...).
 #
 import os, pickle;
 script_base_name = "gen_mlmod_force1";

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+
 # #### Creates a PyTorch model for testing the MLMOD-LAMMPS simulation codes
 # Paul J. Atzberger 
 # http://atzberger.org
