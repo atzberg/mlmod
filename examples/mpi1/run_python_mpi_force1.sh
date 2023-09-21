@@ -11,5 +11,5 @@ out_file_base=./output/mpi_force1/mpirun_python_output
 rm -rf $out_file_base
 
 nproc=4
-mpirun -n $nproc --oversubscribe --output-filename $out_file_base python mpi_force1.py in.force1
+mpirun -n $nproc --oversubscribe --output-filename $out_file_base python mpi_force1.py
 

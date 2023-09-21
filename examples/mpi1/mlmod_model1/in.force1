@@ -1,11 +1,11 @@
-# 3d Lennard-Jones melt
+# lattice of points LJ-style
 
 units		lj
 atom_style	atomic
 atom_modify	map array
 
 lattice		fcc 0.8442
-region		box block 0 2 0 2 0 2
+region		box block -1 1 -1 1 -1 1
 create_box	1 box
 create_atoms	1 box
 mass		1 1.0
@@ -13,9 +13,13 @@ mass		1 1.0
 #velocity	all create 1.44 87287 loop geom
 velocity        all zero linear
 
-pair_style	lj/cut 2.5
+#pair_style	lj/cut 2.5
 #pair_coeff	1 1 1.0 1.0 2.5
-pair_coeff	1 1 0.0 0.00001 2.5
+#pair_coeff	1 1 0.0 0.00001 2.5
+
+pair_style      zero 2.5
+pair_coeff      1 1
+#pair_coeff      * *
 
 #neighbor	0.3 bin
 #neigh_modify	delay 0 every 20 check no

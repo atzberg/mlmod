@@ -5,12 +5,15 @@
 # Paul J. Atzberger 
 # http://atzberger.org
 #     
-# Generates model in PyTorch framework to show basic ideas. 
+# Generates a hand-crafted model in PyTorch framework to show basic ideas. 
 #
-# These models can be replaced readily by almost any PyTorch model that 
-# can be traced and output to .pt torch-format (neural networks, gpr, etc...).
+# This gives a stub for how to use the package and run simulation with 
+# them in LAMMPS
 #
-import os, pickle;
+# These models can be replaced readily by data-driven / learned models or 
+# any other PyTorch model that can be traced and output to .pt torch-format.
+#
+import os, pickle,ipdb;
 script_base_name = "gen_mlmod_force1";
 script_dir = os.getcwd();
 
@@ -272,7 +275,7 @@ class F_X_ML1_Model(torch.nn.Module):
     #out = x + v + f + atype*torch.ones((1,num_dim));
     #out = -0.1*x - 0.01*v + 0.1*time;
     #out = -0.1*x + 0.1*time + 0.1*atype;
-    out = -0.1*x;
+    out = -0.1*x - 0.1*v;
     out = out.reshape((num_atoms*num_dim,1));  
     
     return out;
@@ -441,7 +444,7 @@ f_ml1_model = F_ML1_Model(a=a,num_dim=num_dim,
                           mask_input=mask_input,num_atoms=num_atoms);
 f_ml1_model.a = a;
 
-# write the model structure to a params file for later reference 
+# WARNING: currently hard-coded
 f = open('%s/F_%s_%s_params.pickle'%(base_dir,model_name,model_type),'wb');
 params_force = {
 'model_type':model_type,
@@ -507,7 +510,7 @@ print("model_type = " + model_type);
 print("."*80);
 
 #mask_input = "X V F Type Time";
-mask_input = "X Type Time";
+mask_input = "X V Type Time";
 print("mask_input = " + mask_input);
 num_inputs = len(mask_input.split());
 num_atoms = 1; num_dim = 3; 
@@ -520,7 +523,7 @@ f_ml1_model = F_X_ML1_Model(a=a,num_dim=num_dim,
                             mask_input=mask_input,num_atoms=1);
 f_ml1_model.a = a;
 
-# write the model structure to a params file for later reference 
+# WARNING: currently hard-coded
 f = open('%s/F_%s_%s_params.pickle'%(base_dir,model_name,model_type),'wb');
 params_force = {
 'model_type':model_type,
@@ -590,7 +593,7 @@ f_ml1_model = F_Pair_ML1_Model(a=a,num_dim=num_dim,
                                mask_input=mask_input,num_atoms=2);
 f_ml1_model.a = a;
 
-# write the model structure to a params file for later reference 
+# WARNING: currently hard-coded
 f = open('%s/F_%s_%s_params.pickle'%(base_dir,model_name,model_type),'wb');
 params_force = {
 'model_type':model_type,
