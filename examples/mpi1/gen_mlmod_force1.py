@@ -9,6 +9,7 @@
 #
 # These models can be replaced readily by almost any PyTorch model that 
 # can be traced and output to .pt torch-format (neural networks, gpr, etc...).
+#
 import os, pickle;
 script_base_name = "gen_mlmod_force1";
 script_dir = os.getcwd();
@@ -440,7 +441,7 @@ f_ml1_model = F_ML1_Model(a=a,num_dim=num_dim,
                           mask_input=mask_input,num_atoms=num_atoms);
 f_ml1_model.a = a;
 
-# WARNING: currently hard-coded
+# write the model structure to a params file for later reference 
 f = open('%s/F_%s_%s_params.pickle'%(base_dir,model_name,model_type),'wb');
 params_force = {
 'model_type':model_type,
@@ -519,7 +520,7 @@ f_ml1_model = F_X_ML1_Model(a=a,num_dim=num_dim,
                             mask_input=mask_input,num_atoms=1);
 f_ml1_model.a = a;
 
-# WARNING: currently hard-coded
+# write the model structure to a params file for later reference 
 f = open('%s/F_%s_%s_params.pickle'%(base_dir,model_name,model_type),'wb');
 params_force = {
 'model_type':model_type,
@@ -589,7 +590,7 @@ f_ml1_model = F_Pair_ML1_Model(a=a,num_dim=num_dim,
                                mask_input=mask_input,num_atoms=2);
 f_ml1_model.a = a;
 
-# WARNING: currently hard-coded
+# write the model structure to a params file for later reference 
 f = open('%s/F_%s_%s_params.pickle'%(base_dir,model_name,model_type),'wb');
 params_force = {
 'model_type':model_type,
