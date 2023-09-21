@@ -6,7 +6,7 @@ MPI simulation using a force that acts on particles from a pytorch model $F(X)$.
 
 To run the simulation for the python mlmod package, use 
 
-```mpirun -n 4 python run_sim_force1.py```
+```mpirun -n 4 python mpi_force1.py```
 
 To generate the PyTorch models, use 
 
