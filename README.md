@@ -135,11 +135,11 @@ We gratefully acknowledge support from NSF Grant DMS-2306101,
 NSF Grant DMS-1616353, and DOE Grant ASCR PHILMS DE-SC0019246.
 
 __Additional Information__ <br>
-https://atzberger.org/
+http://atzberger.org/
 
 ----
 [Documentation](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
 [Examples](./examples) |
 [Paper](./paper/paper.pdf) |
-[Atzberger Homepage](https://atzberger.org/)
+[Atzberger Homepage](http://atzberger.org/)
 
