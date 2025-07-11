@@ -40,7 +40,7 @@ following
   [mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl)  
 - Linux Debian 9+/Ubuntu (flexible install) (previous):
   [mlmod_lammps-1.0.3-py3-none-any.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-any.whl)
-  - Linux Debian 9+/Ubuntu (flexible install) (latest):
+- Linux Debian 9+/Ubuntu (flexible install) (latest):
   [mlmod_lammps-1.0.4-py3-none-any.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.4-py3-none-any.whl)
 
 Install using 
