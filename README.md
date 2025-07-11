@@ -34,8 +34,10 @@ __To try automatically__ to install the package for Python, you can use the scri
 __To install directly__ the pre-compiled packages for Python, download one of the
 following
 
-- Linux Debian 9+/Ubuntu:
+- Linux Debian 9+/Ubuntu (old):
   [mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl)
+- Linux Debian 9+/Ubuntu (latest):
+  [mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl)  
 - Linux Debian 9+/Ubuntu (flexible install):
   [mlmod_lammps-1.0.3-py3-none-any.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-any.whl)
 
