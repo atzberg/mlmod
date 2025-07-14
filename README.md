@@ -77,7 +77,7 @@ ubuntu:20.04 /bin/bash```  You can then use ```apt update; apt install
 python3-pip```, and can then pip install and run the simulation package as
 above.  Note use command ```python3``` in place of ```python``` when calling
 scripts.  Pre-installed packages in anaconda also in ```docker run -it
-atzberg/ubuntu_20_04_anaconda1 /bin/bash```  Use ```conda activate
+atzberg/ubuntu_24_04_anaconda3 /bin/bash```  Use ```conda activate
 mlmod-lammps``` May need to update packages to the latest version.   
 
 For more information on other ways to install or compile the package, please
