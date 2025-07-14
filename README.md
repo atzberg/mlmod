@@ -28,8 +28,9 @@ potentials, many-body interactions, and others.
 
 __To try automatically__ to install the package for Python, you can use the script
 [quick_install.py](./quick_install.py).
-
-```python ./quick_install.py```
+```
+python ./quick_install.py
+```
 
 __To install directly__ the pre-compiled packages for Python, download one of the
 following
@@ -45,11 +46,15 @@ following
 
 Install using 
 
-```pip install -U (substitute-filename-or-url-here).whl```
+```
+pip install -U (substitute-filename-or-url-here).whl
+```
 
 To test the package installed run 
 
-```python -c "from mlmod_lammps.tests import t1; t1.test()"```
+```
+python -c "from mlmod_lammps.tests import t1; t1.test()"
+```
 
 __For example models and simulations__, see the notebooks and scripts in the
 [examples
@@ -62,7 +67,9 @@ Pre-compiled binaries are currently for (Debian 9+/Ubuntu and Centos 7+, Python 
 
 __If you installed previously__ this package, please be sure to update to the
 latest version using 
-```pip install -U (substitute-filename-or-url-here).whl```
+```
+pip install -U (substitute-filename-or-url-here).whl
+```
 
 __Video__ giving a brief overview of MLMOD can be found
 [here](https://youtu.be/BZulqaZT5o0). 
@@ -73,12 +80,19 @@ For running prototype models and simulations on a desktop, such as Windows and
 MacOS, we recommend using Docker container.  For example, install [Docker
 Desktop](https://docs.docker.com/desktop/), or docker for linux, and then load
 a standard ubuntu container by using in the terminal ```docker run -it
-ubuntu:20.04 /bin/bash```  You can then use ```apt update; apt install
+ubuntu:24.04 /bin/bash```  You can then use ```apt update; apt install
 python3-pip```, and can then pip install and run the simulation package as
 above.  Note use command ```python3``` in place of ```python``` when calling
-scripts.  Pre-installed packages in anaconda also in ```docker run -it
-atzberg/ubuntu_24_04_anaconda3 /bin/bash```  Use ```conda activate
-mlmod-lammps``` May need to update packages to the latest version.   
+scripts.  Pre-installed packages in anaconda also in 
+```
+docker run -it atzberg/ubuntu_24_04_anaconda3 /bin/bash
+```  
+Use 
+```
+conda activate mlmod-lammps
+``` 
+
+May need to update packages to the latest version.   
 
 For more information on other ways to install or compile the package, please
 see the [documentation
