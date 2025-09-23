@@ -4,7 +4,7 @@ import subprocess;
 
 # version and URL
 vstr='1.0.4';
-server='https://web.math.ucsb.edu/~atzberg/mlmod/distr'
+server='https://web.atzberger.org/mlmod/distr'
 
 # distributions to try
 manylinux_list = ['manylinux_2_24_x86_64','any'];

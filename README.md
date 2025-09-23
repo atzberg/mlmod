@@ -2,7 +2,7 @@
 <img src="https://github.com/atzberg/mlmod/blob/main/images/docs/mlmod_software.png" width="90%"> 
 </p>
 
-[Documentation](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
+[Documentation](https://web.atzberger.org/mlmod/docs/index.html) |
 [Examples](./examples) |
 [Paper](./paper/paper.pdf)
                                                                                                 
@@ -36,13 +36,13 @@ __To install directly__ the pre-compiled packages for Python, download one of th
 following
 
 - Linux Debian 9+/Ubuntu (previous):
-  [mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl)
+  [mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl](https://web.atzberger.org/mlmod/distr/mlmod_lammps-1.0.3-py3-none-manylinux_2_24_x86_64.whl)
 - Linux Debian 9+/Ubuntu (latest):
-  [mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl)  
+  [mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl](https://web.atzberger.org/mlmod/distr/mlmod_lammps-1.0.4-py3-none-manylinux_2_34_x86_64.whl)  
 - Linux Debian 9+/Ubuntu (flexible install) (previous):
-  [mlmod_lammps-1.0.3-py3-none-any.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.3-py3-none-any.whl)
+  [mlmod_lammps-1.0.3-py3-none-any.whl](https://web.atzberger.org/mlmod/distr/mlmod_lammps-1.0.3-py3-none-any.whl)
 - Linux Debian 9+/Ubuntu (flexible install) (latest):
-  [mlmod_lammps-1.0.4-py3-none-any.whl](https://web.math.ucsb.edu/~atzberg/mlmod/distr/mlmod_lammps-1.0.4-py3-none-any.whl)
+  [mlmod_lammps-1.0.4-py3-none-any.whl](https://web.atzberger.org/mlmod/distr/mlmod_lammps-1.0.4-py3-none-any.whl)
 
 Install using 
 
@@ -61,7 +61,7 @@ __For example models and simulations__, see the notebooks and scripts in the
 folder](/examples).  
 
 __Documentation pages__ can be found
-[here](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html).
+[here](https://web.atzberger.org/mlmod/docs/index.html).
 
 Pre-compiled binaries are currently for (Debian 9+/Ubuntu and Centos 7+, Python 3.6+).
 
@@ -96,7 +96,7 @@ May need to update packages to the latest version.
 
 For more information on other ways to install or compile the package, please
 see the [documentation
-pages](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html).
+pages](https://web.atzberger.org/mlmod/docs/index.html).
 
 ---
 Please cite the paper below for this package:
@@ -127,7 +127,7 @@ link]](https://doi.org/10.21105/joss.05620).
   [here](https://youtu.be/BZulqaZT5o0).
 
 - __Documentation__ on using the package can be found
-  [here](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html).
+  [here](https://web.atzberger.org/mlmod/docs/index.html).
 
 - __Examples__ can be found
   [here](https://github.com/atzberg/mlmod/tree/master/examples).
@@ -156,7 +156,7 @@ __Additional Information__ <br>
 http://atzberger.org/
 
 ----
-[Documentation](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
+[Documentation](https://web.atzberger.org/mlmod/docs/index.html) |
 [Examples](./examples) |
 [Paper](./paper/paper.pdf) |
 [Atzberger Homepage](http://atzberger.org/)
