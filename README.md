@@ -159,5 +159,5 @@ http://atzberger.org/
 [Documentation](https://web.atzberger.org/mlmod/docs/index.html) |
 [Examples](./examples) |
 [Paper](./paper/paper.pdf) |
-[Atzberger Homepage](http://atzberger.org/)
+[Atzberger Homepage](https://web.atzberger.org)
 
