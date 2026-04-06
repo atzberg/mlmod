@@ -331,7 +331,7 @@ If you use MLMOD in your research, please cite:
 
 ---
 
-## 🔗 Additional Resources
+## ⚙️ Additional Resources
 
 | Resource | Link |
 |----------|------|
@@ -346,6 +346,12 @@ If you use MLMOD in your research, please cite:
 ## 🔆 Acknowledgements
 
 Support from NSF Grant DMS-2306101, NSF Grant DMS-1616353, and DOE Grant ASCR PHILMS DE-SC0019246 is gratefully acknowledged. More recent documentation and development used assistance from AI Anthropic Claude 3.6 Sonnet. The core algorithms and mathematical frameworks in this package were designed and manually implemented by the authors.
+
+---
+
+
+## 🔗 Additional Information
+https://web.atzberger.org
 
 ---
 
