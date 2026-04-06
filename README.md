@@ -8,7 +8,7 @@
 
 ---
 
-# MLMOD: Data-Driven Modeling and Simulation in LAMMPS (Machine Learning Methods)
+# MLMOD: Data-Driven Modeling and Simulation in LAMMPS (Machine Learning Package)
 
 **MLMOD** is a Python/C++ machine learning simulation package that integrates data-driven models directly into [LAMMPS](https://www.lammps.org/) molecular dynamics simulations. It enables learning data-driven models for particle dynamics, forces, mobility tensors, and other quantities of interest using trained ML approaches — including neural networks, Gaussian process regression, and other PyTorch-compatible architectures.
 
