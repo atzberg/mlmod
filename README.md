@@ -4,8 +4,7 @@
 
 [Documentation](https://web.math.ucsb.edu/~atzberg/mlmod/docs/index.html) |
 [Examples](./examples) |
-[Paper](./paper/paper.pdf) |
-[Atzberger Homepage](http://atzberger.org/)
+[Paper](./paper/paper.pdf) 
 
 ---
 
