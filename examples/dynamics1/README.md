@@ -14,11 +14,15 @@ Steps
 
 1. Generate the PyTorch models using
 
-```python gen_mlmod_dynamics1.py```
+```bash
+python gen_mlmod_dynamics1.py
+```
 
 2. Run the simulations in the python mlmod package using
 
-```python run_sim_dynamics1.py```
+```bash
+python run_sim_dynamics1.py
+```
 
 🔺 This generates a PyTorch model using tracing which is then incorporated into the simulations in place of the LAMMPs time-step integrator.
 
