@@ -5,7 +5,9 @@
 # ✴️ Modeling Dynamics with PyTorch 
 
 Perform simulations using dynamics from a PyTorch model $A(\cdot;\theta)$ with 
+
 $$X^{n+1} = A(X^n,V^n,F^n;\theta).$$
+
 The model $A$ can be obtained either from training or directly specfied.
 
 ## 🔸 Example:
