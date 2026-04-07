@@ -1,9 +1,15 @@
-⭐ Tests the computed mobility responses of pytorch models in comparison with the
+# ✴️ Tests of Mobility Responses 
+
+This computes mobility responses of pytorch models and compares them with the
 expected mobility responses predicted from analytic models.
 
-To perform the tests, use 
+## 🛠️ Performing Tests
 
-``run_test.sh``
+To perform the test use 
+
+```bash
+run_test.sh
+```
 
 🔹Several tests are performed by computing for configurations of particles the
 mlmod mobility responses.  This is compared with those of analytic mobilities
